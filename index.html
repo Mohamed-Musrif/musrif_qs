@@ -3,30 +3,771 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Professional Quantity Surveyor Portfolio</title>
+    <title>Aliyar Mohamed Musrif | Professional Quantity Surveyor</title>
     
     <!-- SEO Meta Tags -->
-    <meta name="description" content="Professional Quantity Surveyor portfolio showcasing construction cost management, contract administration, and project controls expertise.">
-    <meta name="keywords" content="Quantity Surveyor, Construction, Cost Estimation, BOQ, Contract Administration, Project Management">
-    <meta name="author" content="Ahmed Hassan">
+    <meta name="description" content="Professional Quantity Surveyor portfolio showcasing construction cost management, contract administration, and project controls expertise. HND in QS completed, BSc in QS (Hons) following.">
+    <meta name="keywords" content="Aliyar Mohamed Musrif, Quantity Surveyor, Construction, Cost Estimation, BOQ, Contract Administration, Project Management, HND Quantity Surveying, BSc Quantity Surveying">
+    <meta name="author" content="Aliyar Mohamed Musrif">
     
     <!-- External CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/animations.css">
+    <!-- Remove these lines since files are in root -->
+    <!-- <link rel="stylesheet" href="css/style.css"> -->
+    <!-- <link rel="stylesheet" href="css/animations.css"> -->
     
     <!-- Three.js Library -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     
-    <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="assets/icons/favicon.ico">
+    <!-- Internal CSS (combined from both CSS files) -->
+    <style>
+        /* ===== CSS Variables ===== */
+        :root {
+            --primary-dark: #1a2a3a;
+            --primary-navy: #0d1b2a;
+            --charcoal: #2d3748;
+            --construction-orange: #f97316;
+            --construction-gold: #d4af37;
+            --accent-white: #f8f9fa;
+            --light-gray: #e9ecef;
+            --medium-gray: #adb5bd;
+            --text-dark: #212529;
+            --shadow: rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        /* ===== Base Styles ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Open Sans', sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background-color: var(--accent-white);
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--primary-navy);
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            line-height: 1.2;
+        }
+
+        h2 {
+            font-size: 2rem;
+            position: relative;
+            display: inline-block;
+            margin-bottom: 2.5rem;
+        }
+
+        h2:after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 60px;
+            height: 4px;
+            background-color: var(--construction-orange);
+        }
+
+        p {
+            margin-bottom: 1rem;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        section {
+            padding: 5rem 0;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-title h2:after {
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        /* ===== Navigation ===== */
+        header {
+            background-color: rgba(13, 27, 42, 0.95);
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            transition: var(--transition);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.2rem 1.5rem;
+        }
+
+        .logo {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: var(--accent-white);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+
+        .logo span {
+            color: var(--construction-orange);
+        }
+
+        .logo i {
+            margin-right: 0.5rem;
+            font-size: 1.8rem;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-links li {
+            margin-left: 2rem;
+        }
+
+        .nav-links a {
+            color: var(--accent-white);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1rem;
+            transition: var(--transition);
+            padding: 0.5rem 0;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: var(--construction-orange);
+        }
+
+        .nav-links a:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--construction-orange);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover:after {
+            width: 100%;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--accent-white);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* ===== Hero Section ===== */
+        .hero {
+            background: linear-gradient(rgba(13, 27, 42, 0.85), rgba(13, 27, 42, 0.9)), url('https://images.unsplash.com/photo-1504307651254-35680f356dfd?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80');
+            background-size: cover;
+            background-position: center;
+            color: var(--accent-white);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            z-index: 2;
+            position: relative;
+        }
+
+        .hero h1 {
+            color: var(--accent-white);
+            font-size: 3.2rem;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        .hero .title {
+            color: var(--construction-gold);
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2.5rem;
+            max-width: 600px;
+            opacity: 0.9;
+        }
+
+        .cta-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0.9rem 2rem;
+            background-color: var(--construction-orange);
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: var(--transition);
+            border: 2px solid var(--construction-orange);
+            cursor: pointer;
+            text-align: center;
+        }
+
+        .btn:hover {
+            background-color: transparent;
+            color: var(--construction-orange);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            color: var(--accent-white);
+            border-color: var(--accent-white);
+        }
+
+        .btn-outline:hover {
+            background-color: var(--accent-white);
+            color: var(--primary-navy);
+        }
+
+        /* ===== 3D Container ===== */
+        #tool-container {
+            position: absolute;
+            top: 10%;
+            right: 5%;
+            width: 300px;
+            height: 300px;
+            z-index: 1;
+        }
+
+        /* ===== About Section ===== */
+        .about {
+            background-color: var(--light-gray);
+        }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .about-text h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .highlight-box {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px var(--shadow);
+            margin-top: 2rem;
+            border-left: 5px solid var(--construction-orange);
+        }
+
+        .education-item {
+            margin-bottom: 1.5rem;
+        }
+
+        .education-item h4 {
+            color: var(--construction-orange);
+            margin-bottom: 0.5rem;
+        }
+
+        /* ===== Skills Section ===== */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .skill-card {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px var(--shadow);
+            transition: var(--transition);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .skill-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .skill-card:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background-color: var(--construction-orange);
+            z-index: 2;
+        }
+
+        .skill-icon {
+            font-size: 2.5rem;
+            color: var(--construction-orange);
+            margin-bottom: 1.5rem;
+        }
+
+        .skill-card h3 {
+            margin-bottom: 1rem;
+        }
+
+        .software-list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.8rem;
+            margin-top: 1.5rem;
+        }
+
+        .software-badge {
+            background-color: var(--light-gray);
+            color: var(--primary-navy);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+
+        .software-badge:hover {
+            background-color: var(--construction-orange);
+            color: white;
+        }
+
+        /* ===== Projects Section ===== */
+        .projects {
+            background-color: var(--light-gray);
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .project-card {
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px var(--shadow);
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .project-img {
+            height: 200px;
+            background-color: var(--charcoal);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-img:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(249, 115, 22, 0.2), rgba(13, 27, 42, 0.7));
+            z-index: 1;
+        }
+
+        .project-content {
+            padding: 1.8rem;
+        }
+
+        .project-content h3 {
+            margin-bottom: 0.8rem;
+        }
+
+        .project-role {
+            color: var(--construction-orange);
+            font-weight: 600;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .responsibilities {
+            list-style-type: none;
+            margin-top: 1rem;
+        }
+
+        .responsibilities li {
+            margin-bottom: 0.5rem;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .responsibilities li:before {
+            content: '▸';
+            position: absolute;
+            left: 0;
+            color: var(--construction-orange);
+        }
+
+        /* ===== Certifications ===== */
+        .certifications-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .cert-card {
+            background-color: white;
+            padding: 1.8rem;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px var(--shadow);
+            transition: var(--transition);
+            border-top: 4px solid var(--construction-gold);
+        }
+
+        .cert-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .cert-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .cert-provider {
+            color: var(--construction-orange);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .cert-date {
+            color: var(--medium-gray);
+            font-size: 0.9rem;
+        }
+
+        /* ===== Contact Section ===== */
+        .contact {
+            background-color: var(--primary-navy);
+            color: var(--accent-white);
+        }
+
+        .contact h2, .contact h3 {
+            color: var(--accent-white);
+        }
+
+        .contact h2:after {
+            background-color: var(--construction-gold);
+        }
+
+        .contact-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+        }
+
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1.2rem;
+        }
+
+        .contact-icon {
+            background-color: rgba(255, 255, 255, 0.1);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            color: var(--construction-gold);
+            flex-shrink: 0;
+        }
+
+        .contact-text h4 {
+            margin-bottom: 0.3rem;
+        }
+
+        .contact-text a {
+            color: var(--accent-white);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .contact-text a:hover {
+            color: var(--construction-gold);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 45px;
+            height: 45px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            color: var(--accent-white);
+            font-size: 1.2rem;
+            transition: var(--transition);
+        }
+
+        .social-link:hover {
+            background-color: var(--construction-orange);
+            transform: translateY(-3px);
+        }
+
+        .contact-form {
+            background-color: rgba(255, 255, 255, 0.05);
+            padding: 2.5rem;
+            border-radius: 8px;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.9rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 4px;
+            color: var(--accent-white);
+            font-family: 'Open Sans', sans-serif;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--construction-orange);
+        }
+
+        .form-control::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        textarea.form-control {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        /* ===== Footer ===== */
+        footer {
+            background-color: var(--charcoal);
+            color: var(--accent-white);
+            text-align: center;
+            padding: 2rem 0;
+            font-size: 0.9rem;
+        }
+
+        /* ===== Parallax Effect ===== */
+        .parallax {
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+        /* ===== Animations ===== */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in {
+            animation: fadeIn 1s ease-out;
+        }
+
+        .page-transition {
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        /* ===== Responsive Design ===== */
+        @media (max-width: 992px) {
+            .about-content, .contact-content {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+
+            h1 {
+                font-size: 2.8rem;
+            }
+            
+            .hero h1 {
+                font-size: 2.8rem;
+            }
+            
+            #tool-container {
+                width: 250px;
+                height: 250px;
+                right: 2%;
+            }
+        }
+
+        @media (max-width: 768px) {
+            section {
+                padding: 4rem 0;
+            }
+
+            .nav-links {
+                position: fixed;
+                top: 70px;
+                left: 0;
+                width: 100%;
+                background-color: var(--primary-navy);
+                flex-direction: column;
+                align-items: center;
+                padding: 2rem 0;
+                clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
+                transition: clip-path 0.4s ease;
+                box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            }
+
+            .nav-links.active {
+                clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+            }
+
+            .nav-links li {
+                margin: 1rem 0;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .hero .title {
+                font-size: 1.5rem;
+            }
+
+            .hero p {
+                font-size: 1.1rem;
+            }
+
+            .btn {
+                padding: 0.8rem 1.8rem;
+            }
+
+            #tool-container {
+                display: none;
+            }
+
+            .contact-form {
+                padding: 2rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            h1 {
+                font-size: 2.3rem;
+            }
+            
+            h2 {
+                font-size: 1.8rem;
+            }
+            
+            .hero h1 {
+                font-size: 2.3rem;
+            }
+            
+            .cta-buttons {
+                flex-direction: column;
+            }
+            
+            .btn {
+                width: 100%;
+            }
+            
+            .skills-grid, .projects-grid, .certifications-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
 <body>
     <!-- Navigation -->
     <header>
         <nav class="container nav-container">
-            <a href="#" class="logo"><i class="fas fa-ruler-combined"></i>QS<span>Portfolio</span></a>
+            <a href="#" class="logo"><i class="fas fa-ruler-combined"></i>AMM<span>QS</span></a>
             <button class="mobile-menu-btn" id="mobileMenuBtn">
                 <i class="fas fa-bars"></i>
             </button>
@@ -45,9 +786,9 @@
     <section class="hero" id="home">
         <div class="container">
             <div class="hero-content">
-                <h1>Ahmed Hassan</h1>
+                <h1>Aliyar Mohamed Musrif</h1>
                 <div class="title">Professional Quantity Surveyor</div>
-                <p>Specializing in cost estimation, contract administration, and construction project management for commercial and infrastructure projects in the Gulf region and internationally.</p>
+                <p>HND in Quantity Surveying (Completed) | BSc in Quantity Surveying (Hons) Following. Specializing in cost estimation, contract administration, and construction project management for commercial and residential projects.</p>
                 <div class="cta-buttons">
                     <a href="#projects" class="btn">View Portfolio</a>
                     <a href="#contact" class="btn btn-outline">Contact Me</a>
@@ -66,29 +807,30 @@
             </div>
             <div class="about-content">
                 <div class="about-text">
-                    <h3>Professional Quantity Surveyor with 8+ Years Experience</h3>
-                    <p>I am a dedicated and detail-oriented Quantity Surveyor with extensive experience in construction cost management, contract administration, and project controls. My expertise spans across commercial, residential, and infrastructure projects in the Middle East and international markets.</p>
-                    <p>I specialize in delivering accurate cost estimates, managing project budgets, and ensuring contract compliance to maximize project value for clients and stakeholders.</p>
+                    <h3>Dedicated Quantity Surveyor with Academic Excellence</h3>
+                    <p>I am a committed and detail-oriented Quantity Surveyor currently advancing my academic qualifications while building practical experience in construction cost management. I have successfully completed my Higher National Diploma in Quantity Surveying and am currently pursuing a Bachelor of Science in Quantity Surveying (Honours) degree.</p>
+                    <p>My passion lies in delivering accurate cost estimates, managing project budgets, and ensuring contract compliance to maximize value for construction projects.</p>
                     
                     <div class="highlight-box">
                         <h4>Career Objective</h4>
-                        <p>To leverage my expertise in quantity surveying and construction cost management to contribute to challenging projects, while pursuing professional growth within a progressive organization in the construction industry.</p>
+                        <p>To apply my strong academic foundation in quantity surveying to contribute effectively to construction projects, while continuing my professional development and pursuing chartered status with RICS.</p>
                     </div>
                 </div>
                 <div class="about-education">
                     <h3>Education & Qualifications</h3>
                     <div class="education-item">
+                        <h4>Bachelor of Science in Quantity Surveying (Honours)</h4>
+                        <p>Currently Pursuing (Expected Graduation: 2025)</p>
+                        <p>Specializing in Construction Economics and Contract Law</p>
+                    </div>
+                    <div class="education-item">
                         <h4>Higher National Diploma in Quantity Surveying</h4>
-                        <p>University of Construction Management, 2013</p>
-                        <p>Graduated with Distinction</p>
+                        <p>Completed with Distinction (2022)</p>
+                        <p>Key Modules: Construction Technology, Measurement, Cost Studies</p>
                     </div>
                     <div class="education-item">
-                        <h4>Professional Certification in Construction Law</h4>
-                        <p>Royal Institution of Chartered Surveyors (RICS), 2017</p>
-                    </div>
-                    <div class="education-item">
-                        <h4>Certified Cost Professional (CCP)</h4>
-                        <p>AACE International, 2019</p>
+                        <h4>Diploma in AutoCAD for Construction Professionals</h4>
+                        <p>Completed: 2023</p>
                     </div>
                 </div>
             </div>
@@ -107,35 +849,35 @@
                         <i class="fas fa-calculator"></i>
                     </div>
                     <h3>Quantity Take-Off</h3>
-                    <p>Accurate measurement and quantification of construction materials from drawings and specifications.</p>
+                    <p>Proficient in measurement and quantification from construction drawings using SMM7 and NRM standards.</p>
                 </div>
                 <div class="skill-card">
                     <div class="skill-icon">
                         <i class="fas fa-chart-line"></i>
                     </div>
                     <h3>Cost Estimation</h3>
-                    <p>Preparation of detailed cost estimates, feasibility studies, and life cycle cost analysis for projects.</p>
+                    <p>Preparation of preliminary and detailed cost estimates for residential and commercial projects.</p>
                 </div>
                 <div class="skill-card">
                     <div class="skill-icon">
                         <i class="fas fa-file-invoice"></i>
                     </div>
                     <h3>BOQ Preparation</h3>
-                    <p>Development of comprehensive Bills of Quantities in accordance with standard methods of measurement.</p>
+                    <p>Development of comprehensive Bills of Quantities with elemental breakdown and pricing.</p>
                 </div>
                 <div class="skill-card">
                     <div class="skill-icon">
                         <i class="fas fa-handshake"></i>
                     </div>
-                    <h3>Tendering & Contracts</h3>
-                    <p>Management of tender processes, contract negotiation, and preparation of contractual documentation.</p>
+                    <h3>Tendering Process</h3>
+                    <p>Understanding of tender documentation, bid preparation, and contractor evaluation procedures.</p>
                 </div>
                 <div class="skill-card">
                     <div class="skill-icon">
                         <i class="fas fa-balance-scale"></i>
                     </div>
-                    <h3>Contract Administration</h3>
-                    <p>Administration of construction contracts, variation orders, claims management, and dispute resolution.</p>
+                    <h3>Contract Knowledge</h3>
+                    <p>Familiar with FIDIC, JCT, and ICE contract forms and their application in construction projects.</p>
                 </div>
                 <div class="skill-card">
                     <div class="skill-icon">
@@ -145,8 +887,8 @@
                     <div class="software-list">
                         <span class="software-badge">MS Excel (Advanced)</span>
                         <span class="software-badge">AutoCAD</span>
+                        <span class="software-badge">MS Project</span>
                         <span class="software-badge">Planswift</span>
-                        <span class="software-badge">Primavera P6</span>
                         <span class="software-badge">Revit</span>
                         <span class="software-badge">CostX</span>
                     </div>
@@ -159,48 +901,48 @@
     <section class="projects" id="projects">
         <div class="container">
             <div class="section-title">
-                <h2>Projects & Experience</h2>
+                <h2>Academic Projects & Experience</h2>
             </div>
             <div class="projects-grid">
                 <div class="project-card">
-                    <div class="project-img" style="background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1541888946425-d81bb19240f5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'); background-size: cover;"></div>
+                    <div class="project-img" style="background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1560518883-ce09059eeffa?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'); background-size: cover;"></div>
                     <div class="project-content">
-                        <h3>Al Khobar Mixed-Use Complex</h3>
-                        <span class="project-role">Senior Quantity Surveyor</span>
-                        <p>A 45-story mixed-use development comprising retail, office, and residential spaces with a total built-up area of 180,000 sqm.</p>
+                        <h3>Residential Villa Project - Cost Analysis</h3>
+                        <span class="project-role">Quantity Surveying Student Project</span>
+                        <p>Complete cost analysis and BOQ preparation for a 4-bedroom luxury villa (4500 sq.ft.) including all trades and services.</p>
                         <ul class="responsibilities">
-                            <li>Prepared BOQ for structural, MEP, and finishing works</li>
-                            <li>Managed tender process with 12 contractors</li>
-                            <li>Administered contract valued at $220 million</li>
-                            <li>Processed 85+ variation orders</li>
+                            <li>Prepared detailed take-off from architectural drawings</li>
+                            <li>Developed comprehensive BOQ with 120+ items</li>
+                            <li>Conducted market rates analysis for accurate pricing</li>
+                            <li>Prepared comparative cost analysis report</li>
                         </ul>
                     </div>
                 </div>
                 <div class="project-card">
                     <div class="project-img" style="background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1487956382158-bb926046304a?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'); background-size: cover;"></div>
                     <div class="project-content">
-                        <h3>Dubai Infrastructure Expansion</h3>
-                        <span class="project-role">Lead Quantity Surveyor</span>
-                        <p>Design and construction of 12km road network with associated utilities and bridge structures.</p>
+                        <h3>Commercial Building Tender Documentation</h3>
+                        <span class="project-role">Academic Case Study</span>
+                        <p>Preparation of complete tender documentation for a 3-story commercial building including all contract preliminaries.</p>
                         <ul class="responsibilities">
-                            <li>Developed cost estimate of $95 million</li>
-                            <li>Implemented cost control system saving 8% of budget</li>
-                            <li>Prepared monthly cost reports and cash flow projections</li>
-                            <li>Resolved contractual disputes amounting to $3.2 million</li>
+                            <li>Developed tender package with all contract documents</li>
+                            <li>Prepared preambles and preliminaries section</li>
+                            <li>Created contractor evaluation matrix</li>
+                            <li>Simulated tender opening and evaluation process</li>
                         </ul>
                     </div>
                 </div>
                 <div class="project-card">
                     <div class="project-img" style="background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1512917774080-9991f1c4c750?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'); background-size: cover;"></div>
                     <div class="project-content">
-                        <h3>Abu Dhabi Residential Towers</h3>
-                        <span class="project-role">Quantity Surveyor</span>
-                        <p>Twin residential towers (35 floors each) with luxury amenities and 450 apartment units.</p>
+                        <h3>Construction Site Visit & Report</h3>
+                        <span class="project-role">Field Experience</span>
+                        <p>Site visit to ongoing construction project with detailed observation report and measurement verification exercise.</p>
                         <ul class="responsibilities">
-                            <li>Conducted value engineering saving 12% on facade works</li>
-                            <li>Managed interim payments and final account settlement</li>
-                            <li>Coordinated with design team on cost implications of changes</li>
-                            <li>Prepared cost database for future similar projects</li>
+                            <li>Observed ongoing construction activities</li>
+                            <li>Verified site measurements against drawings</li>
+                            <li>Documented progress for interim valuation</li>
+                            <li>Prepared site visit report with recommendations</li>
                         </ul>
                     </div>
                 </div>
@@ -216,28 +958,28 @@
             </div>
             <div class="certifications-grid">
                 <div class="cert-card">
-                    <h3>Construction Project Management</h3>
+                    <h3>Construction Cost Estimating</h3>
                     <div class="cert-provider">Coursera - Columbia University</div>
-                    <div class="cert-date">Completed: 2021</div>
-                    <p>Specialization covering project planning, scheduling, cost estimation, and risk management.</p>
+                    <div class="cert-date">Completed: 2023</div>
+                    <p>Comprehensive course covering detailed cost estimating techniques and quantity takeoff methods.</p>
                 </div>
                 <div class="cert-card">
-                    <h3>FIDIC Contracts Management</h3>
-                    <div class="cert-provider">International Federation of Consulting Engineers</div>
-                    <div class="cert-date">Completed: 2020</div>
-                    <p>Comprehensive training on FIDIC Red, Yellow, and Silver Books for international projects.</p>
+                    <h3>Construction Project Management</h3>
+                    <div class="cert-provider">Google Career Certificate</div>
+                    <div class="cert-date">Completed: 2023</div>
+                    <p>Project planning, scheduling, budgeting, and risk management in construction projects.</p>
                 </div>
                 <div class="cert-card">
-                    <h3>Building Information Modeling (BIM)</h3>
-                    <div class="cert-provider">Autodesk Authorized Training Center</div>
-                    <div class="cert-date">Completed: 2019</div>
-                    <p>BIM implementation for cost estimation and quantity takeoff using Revit and Navisworks.</p>
+                    <h3>AutoCAD for Construction Professionals</h3>
+                    <div class="cert-provider">Autodesk Authorized Center</div>
+                    <div class="cert-date">Completed: 2023</div>
+                    <p>2D and 3D CAD drafting specifically for construction documentation and detailing.</p>
                 </div>
                 <div class="cert-card">
-                    <h3>Claims Prevention & Resolution</h3>
-                    <div class="cert-provider">Construction Management Association</div>
-                    <div class="cert-date">Completed: 2018</div>
-                    <p>Strategies for preventing and resolving construction claims and disputes effectively.</p>
+                    <h3>Introduction to BIM</h3>
+                    <div class="cert-provider">Autodesk</div>
+                    <div class="cert-date">Completed: 2022</div>
+                    <p>Fundamentals of Building Information Modeling and its application in quantity surveying.</p>
                 </div>
             </div>
         </div>
@@ -257,7 +999,7 @@
                         </div>
                         <div class="contact-text">
                             <h4>Email</h4>
-                            <a href="mailto:ahmed.hassan@example.com">ahmed.hassan@example.com</a>
+                            <a href="mailto:aliyar.musrif@example.com">aliyar.musrif@example.com</a>
                         </div>
                     </div>
                     <div class="contact-item">
@@ -266,7 +1008,7 @@
                         </div>
                         <div class="contact-text">
                             <h4>Phone</h4>
-                            <a href="tel:+971501234567">+971 50 123 4567</a>
+                            <a href="tel:+94771234567">+94 77 123 4567</a>
                         </div>
                     </div>
                     <div class="contact-item">
@@ -275,7 +1017,7 @@
                         </div>
                         <div class="contact-text">
                             <h4>LinkedIn</h4>
-                            <a href="https://linkedin.com/in/ahmedhassan-qs" target="_blank">linkedin.com/in/ahmedhassan-qs</a>
+                            <a href="https://linkedin.com/in/aliyar-musrif" target="_blank">linkedin.com/in/aliyar-musrif</a>
                         </div>
                     </div>
                     <div class="contact-item">
@@ -284,7 +1026,7 @@
                         </div>
                         <div class="contact-text">
                             <h4>Download CV</h4>
-                            <p>Get my detailed professional resume</p>
+                            <p>Get my detailed academic and professional resume</p>
                             <a href="#" class="btn" style="margin-top: 10px; padding: 0.7rem 1.5rem;">Download CV (PDF)</a>
                         </div>
                     </div>
@@ -323,13 +1065,258 @@
     <!-- Footer -->
     <footer>
         <div class="container">
-            <p>&copy; <span id="currentYear"></span> Ahmed Hassan - Professional Quantity Surveyor Portfolio</p>
-            <p>Designed for GitHub Pages | All rights reserved</p>
+            <p>&copy; <span id="currentYear"></span> Aliyar Mohamed Musrif - Professional Quantity Surveyor Portfolio</p>
+            <p>HND in QS (Completed) | BSc in QS (Hons) Following | Designed for GitHub Pages</p>
         </div>
     </footer>
 
-    <!-- External JavaScript -->
-    <script src="js/main.js"></script>
-    <script src="js/threejs-tools.js"></script>
+    <!-- JavaScript (combined in one file) -->
+    <script>
+        // DOM Elements
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const navLinks = document.getElementById('navLinks');
+        const contactForm = document.getElementById('contactForm');
+        const currentYear = document.getElementById('currentYear');
+
+        // Initialize when DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            initMobileMenu();
+            setCurrentYear();
+            setupFormValidation();
+            setupScrollAnimations();
+            setupSmoothScrolling();
+            setupParallaxEffect();
+            init3DTool(); // Initialize 3D tool
+        });
+
+        // Mobile Navigation Toggle
+        function initMobileMenu() {
+            if (!mobileMenuBtn || !navLinks) return;
+            
+            mobileMenuBtn.addEventListener('click', () => {
+                navLinks.classList.toggle('active');
+                mobileMenuBtn.innerHTML = navLinks.classList.contains('active') 
+                    ? '<i class="fas fa-times"></i>' 
+                    : '<i class="fas fa-bars"></i>';
+            });
+            
+            // Close mobile menu when clicking a link
+            document.querySelectorAll('.nav-links a').forEach(link => {
+                link.addEventListener('click', () => {
+                    navLinks.classList.remove('active');
+                    mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+                });
+            });
+        }
+
+        // Set current year in footer
+        function setCurrentYear() {
+            if (currentYear) {
+                currentYear.textContent = new Date().getFullYear();
+            }
+        }
+
+        // Form submission handler
+        function setupFormValidation() {
+            if (!contactForm) return;
+            
+            contactForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Basic validation
+                const name = document.getElementById('name').value.trim();
+                const email = document.getElementById('email').value.trim();
+                const subject = document.getElementById('subject').value.trim();
+                const message = document.getElementById('message').value.trim();
+                
+                if (!name || !email || !subject || !message) {
+                    alert('Please fill in all required fields.');
+                    return;
+                }
+                
+                // Email validation
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailRegex.test(email)) {
+                    alert('Please enter a valid email address.');
+                    return;
+                }
+                
+                // Simulate form submission
+                const submitBtn = contactForm.querySelector('button[type="submit"]');
+                const originalText = submitBtn.textContent;
+                
+                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+                submitBtn.disabled = true;
+                
+                setTimeout(() => {
+                    alert('Thank you for your message, Aliyar! I will get back to you soon.');
+                    contactForm.reset();
+                    submitBtn.textContent = originalText;
+                    submitBtn.disabled = false;
+                }, 1500);
+            });
+        }
+
+        // Smooth scrolling for anchor links
+        function setupSmoothScrolling() {
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    const targetId = this.getAttribute('href');
+                    if (targetId === '#') return;
+                    
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 80,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+        }
+
+        // Parallax effect on scroll
+        function setupParallaxEffect() {
+            window.addEventListener('scroll', function() {
+                const scrolled = window.pageYOffset;
+                
+                // Sticky header effect
+                const header = document.querySelector('header');
+                if (!header) return;
+                
+                if (scrolled > 100) {
+                    header.style.backgroundColor = 'rgba(13, 27, 42, 0.98)';
+                    header.style.boxShadow = '0 5px 20px rgba(0, 0, 0, 0.1)';
+                } else {
+                    header.style.backgroundColor = 'rgba(13, 27, 42, 0.95)';
+                    header.style.boxShadow = '0 2px 10px rgba(0, 0, 0, 0.1)';
+                }
+            });
+        }
+
+        // Three.js 3D Construction Tools Animation
+        function init3DTool() {
+            const container = document.getElementById('tool-container');
+            if (!container) return;
+            
+            // Check if Three.js is loaded
+            if (typeof THREE === 'undefined') {
+                console.error('Three.js is not loaded. Cannot initialize 3D tool.');
+                return;
+            }
+            
+            // Create scene
+            const scene = new THREE.Scene();
+            
+            // Create camera
+            const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 1000);
+            camera.position.z = 5;
+            
+            // Create renderer
+            const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+            renderer.setSize(300, 300);
+            renderer.setClearColor(0x000000, 0);
+            container.appendChild(renderer.domElement);
+            
+            // Add lighting
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+            scene.add(ambientLight);
+            
+            const directionalLight = new THREE.DirectionalLight(0xf97316, 1);
+            directionalLight.position.set(5, 5, 5);
+            scene.add(directionalLight);
+            
+            // Create construction tool (simplified cube with materials)
+            const geometry = new THREE.BoxGeometry(1.5, 1.5, 1.5);
+            const materials = [
+                new THREE.MeshStandardMaterial({ color: 0x2d3748 }), // charcoal
+                new THREE.MeshStandardMaterial({ color: 0xf97316 }), // orange
+                new THREE.MeshStandardMaterial({ color: 0x0d1b2a }), // navy
+                new THREE.MeshStandardMaterial({ color: 0xd4af37 }), // gold
+                new THREE.MeshStandardMaterial({ color: 0x2d3748 }), // charcoal
+                new THREE.MeshStandardMaterial({ color: 0xf97316 }), // orange
+            ];
+            const cube = new THREE.Mesh(geometry, materials);
+            scene.add(cube);
+            
+            // Add wireframe for construction look
+            const edges = new THREE.EdgesGeometry(geometry);
+            const line = new THREE.LineSegments(edges, new THREE.LineBasicMaterial({ color: 0xffffff }));
+            cube.add(line);
+            
+            // Handle window resize
+            window.addEventListener('resize', function() {
+                const container = document.getElementById('tool-container');
+                if (!container || !camera || !renderer) return;
+                
+                const width = container.clientWidth;
+                const height = container.clientHeight;
+                
+                renderer.setSize(width, height);
+                camera.aspect = width / height;
+                camera.updateProjectionMatrix();
+            });
+            
+            // Animation loop
+            function animate() {
+                requestAnimationFrame(animate);
+                
+                // Rotate the cube
+                cube.rotation.x += 0.005;
+                cube.rotation.y += 0.01;
+                
+                if (renderer && scene && camera) {
+                    renderer.render(scene, camera);
+                }
+            }
+            
+            // Start animation
+            animate();
+        }
+
+        // Add animation classes to elements on page load
+        window.addEventListener('load', function() {
+            document.body.classList.add('page-transition');
+            
+            // Add animation delay to skill cards
+            const skillCards = document.querySelectorAll('.skill-card');
+            skillCards.forEach((card, index) => {
+                card.style.animationDelay = `${index * 0.1}s`;
+                card.classList.add('fade-in');
+            });
+            
+            // Add animation delay to project cards
+            const projectCards = document.querySelectorAll('.project-card');
+            projectCards.forEach((card, index) => {
+                card.style.animationDelay = `${index * 0.15}s`;
+                card.classList.add('fade-in');
+            });
+        });
+
+        // Handle window resize with debounce
+        function debounce(func, wait) {
+            let timeout;
+            return function executedFunction(...args) {
+                const later = () => {
+                    clearTimeout(timeout);
+                    func(...args);
+                };
+                clearTimeout(timeout);
+                timeout = setTimeout(later, wait);
+            };
+        }
+
+        window.addEventListener('resize', debounce(function() {
+            // Close mobile menu on resize to desktop
+            if (window.innerWidth > 768 && navLinks) {
+                navLinks.classList.remove('active');
+                if (mobileMenuBtn) {
+                    mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+                }
+            }
+        }, 250));
+    </script>
 </body>
 </html>
