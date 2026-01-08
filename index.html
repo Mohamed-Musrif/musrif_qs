@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Professional Quantity Surveyor Portfolio</title>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Professional Quantity Surveyor portfolio showcasing construction cost management, contract administration, and project controls expertise.">
+    <meta name="keywords" content="Quantity Surveyor, Construction, Cost Estimation, BOQ, Contract Administration, Project Management">
+    <meta name="author" content="Ahmed Hassan">
+    
+    <!-- External CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/animations.css">
+    
+    <!-- Three.js Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="assets/icons/favicon.ico">
+</head>
+<body>
+    <!-- Navigation -->
+    <header>
+        <nav class="container nav-container">
+            <a href="#" class="logo"><i class="fas fa-ruler-combined"></i>QS<span>Portfolio</span></a>
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <i class="fas fa-bars"></i>
+            </button>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#certifications">Certifications</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Ahmed Hassan</h1>
+                <div class="title">Professional Quantity Surveyor</div>
+                <p>Specializing in cost estimation, contract administration, and construction project management for commercial and infrastructure projects in the Gulf region and internationally.</p>
+                <div class="cta-buttons">
+                    <a href="#projects" class="btn">View Portfolio</a>
+                    <a href="#contact" class="btn btn-outline">Contact Me</a>
+                </div>
+            </div>
+        </div>
+        <!-- 3D Construction Tool -->
+        <div id="tool-container"></div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about" id="about">
+        <div class="container">
+            <div class="section-title">
+                <h2>About Me</h2>
+            </div>
+            <div class="about-content">
+                <div class="about-text">
+                    <h3>Professional Quantity Surveyor with 8+ Years Experience</h3>
+                    <p>I am a dedicated and detail-oriented Quantity Surveyor with extensive experience in construction cost management, contract administration, and project controls. My expertise spans across commercial, residential, and infrastructure projects in the Middle East and international markets.</p>
+                    <p>I specialize in delivering accurate cost estimates, managing project budgets, and ensuring contract compliance to maximize project value for clients and stakeholders.</p>
+                    
+                    <div class="highlight-box">
+                        <h4>Career Objective</h4>
+                        <p>To leverage my expertise in quantity surveying and construction cost management to contribute to challenging projects, while pursuing professional growth within a progressive organization in the construction industry.</p>
+                    </div>
+                </div>
+                <div class="about-education">
+                    <h3>Education & Qualifications</h3>
+                    <div class="education-item">
+                        <h4>Higher National Diploma in Quantity Surveying</h4>
+                        <p>University of Construction Management, 2013</p>
+                        <p>Graduated with Distinction</p>
+                    </div>
+                    <div class="education-item">
+                        <h4>Professional Certification in Construction Law</h4>
+                        <p>Royal Institution of Chartered Surveyors (RICS), 2017</p>
+                    </div>
+                    <div class="education-item">
+                        <h4>Certified Cost Professional (CCP)</h4>
+                        <p>AACE International, 2019</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section class="skills" id="skills">
+        <div class="container">
+            <div class="section-title">
+                <h2>Professional Skills</h2>
+            </div>
+            <div class="skills-grid">
+                <div class="skill-card">
+                    <div class="skill-icon">
+                        <i class="fas fa-calculator"></i>
+                    </div>
+                    <h3>Quantity Take-Off</h3>
+                    <p>Accurate measurement and quantification of construction materials from drawings and specifications.</p>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3>Cost Estimation</h3>
+                    <p>Preparation of detailed cost estimates, feasibility studies, and life cycle cost analysis for projects.</p>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-icon">
+                        <i class="fas fa-file-invoice"></i>
+                    </div>
+                    <h3>BOQ Preparation</h3>
+                    <p>Development of comprehensive Bills of Quantities in accordance with standard methods of measurement.</p>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-icon">
+                        <i class="fas fa-handshake"></i>
+                    </div>
+                    <h3>Tendering & Contracts</h3>
+                    <p>Management of tender processes, contract negotiation, and preparation of contractual documentation.</p>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-icon">
+                        <i class="fas fa-balance-scale"></i>
+                    </div>
+                    <h3>Contract Administration</h3>
+                    <p>Administration of construction contracts, variation orders, claims management, and dispute resolution.</p>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-icon">
+                        <i class="fas fa-laptop"></i>
+                    </div>
+                    <h3>Software Proficiency</h3>
+                    <div class="software-list">
+                        <span class="software-badge">MS Excel (Advanced)</span>
+                        <span class="software-badge">AutoCAD</span>
+                        <span class="software-badge">Planswift</span>
+                        <span class="software-badge">Primavera P6</span>
+                        <span class="software-badge">Revit</span>
+                        <span class="software-badge">CostX</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section class="projects" id="projects">
+        <div class="container">
+            <div class="section-title">
+                <h2>Projects & Experience</h2>
+            </div>
+            <div class="projects-grid">
+                <div class="project-card">
+                    <div class="project-img" style="background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1541888946425-d81bb19240f5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'); background-size: cover;"></div>
+                    <div class="project-content">
+                        <h3>Al Khobar Mixed-Use Complex</h3>
+                        <span class="project-role">Senior Quantity Surveyor</span>
+                        <p>A 45-story mixed-use development comprising retail, office, and residential spaces with a total built-up area of 180,000 sqm.</p>
+                        <ul class="responsibilities">
+                            <li>Prepared BOQ for structural, MEP, and finishing works</li>
+                            <li>Managed tender process with 12 contractors</li>
+                            <li>Administered contract valued at $220 million</li>
+                            <li>Processed 85+ variation orders</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-img" style="background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1487956382158-bb926046304a?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'); background-size: cover;"></div>
+                    <div class="project-content">
+                        <h3>Dubai Infrastructure Expansion</h3>
+                        <span class="project-role">Lead Quantity Surveyor</span>
+                        <p>Design and construction of 12km road network with associated utilities and bridge structures.</p>
+                        <ul class="responsibilities">
+                            <li>Developed cost estimate of $95 million</li>
+                            <li>Implemented cost control system saving 8% of budget</li>
+                            <li>Prepared monthly cost reports and cash flow projections</li>
+                            <li>Resolved contractual disputes amounting to $3.2 million</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-img" style="background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1512917774080-9991f1c4c750?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'); background-size: cover;"></div>
+                    <div class="project-content">
+                        <h3>Abu Dhabi Residential Towers</h3>
+                        <span class="project-role">Quantity Surveyor</span>
+                        <p>Twin residential towers (35 floors each) with luxury amenities and 450 apartment units.</p>
+                        <ul class="responsibilities">
+                            <li>Conducted value engineering saving 12% on facade works</li>
+                            <li>Managed interim payments and final account settlement</li>
+                            <li>Coordinated with design team on cost implications of changes</li>
+                            <li>Prepared cost database for future similar projects</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Certifications Section -->
+    <section class="certifications" id="certifications">
+        <div class="container">
+            <div class="section-title">
+                <h2>Certifications & Courses</h2>
+            </div>
+            <div class="certifications-grid">
+                <div class="cert-card">
+                    <h3>Construction Project Management</h3>
+                    <div class="cert-provider">Coursera - Columbia University</div>
+                    <div class="cert-date">Completed: 2021</div>
+                    <p>Specialization covering project planning, scheduling, cost estimation, and risk management.</p>
+                </div>
+                <div class="cert-card">
+                    <h3>FIDIC Contracts Management</h3>
+                    <div class="cert-provider">International Federation of Consulting Engineers</div>
+                    <div class="cert-date">Completed: 2020</div>
+                    <p>Comprehensive training on FIDIC Red, Yellow, and Silver Books for international projects.</p>
+                </div>
+                <div class="cert-card">
+                    <h3>Building Information Modeling (BIM)</h3>
+                    <div class="cert-provider">Autodesk Authorized Training Center</div>
+                    <div class="cert-date">Completed: 2019</div>
+                    <p>BIM implementation for cost estimation and quantity takeoff using Revit and Navisworks.</p>
+                </div>
+                <div class="cert-card">
+                    <h3>Claims Prevention & Resolution</h3>
+                    <div class="cert-provider">Construction Management Association</div>
+                    <div class="cert-date">Completed: 2018</div>
+                    <p>Strategies for preventing and resolving construction claims and disputes effectively.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+        <div class="container">
+            <div class="section-title">
+                <h2>Get In Touch</h2>
+            </div>
+            <div class="contact-content">
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div class="contact-text">
+                            <h4>Email</h4>
+                            <a href="mailto:ahmed.hassan@example.com">ahmed.hassan@example.com</a>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-phone"></i>
+                        </div>
+                        <div class="contact-text">
+                            <h4>Phone</h4>
+                            <a href="tel:+971501234567">+971 50 123 4567</a>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fab fa-linkedin"></i>
+                        </div>
+                        <div class="contact-text">
+                            <h4>LinkedIn</h4>
+                            <a href="https://linkedin.com/in/ahmedhassan-qs" target="_blank">linkedin.com/in/ahmedhassan-qs</a>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-file-download"></i>
+                        </div>
+                        <div class="contact-text">
+                            <h4>Download CV</h4>
+                            <p>Get my detailed professional resume</p>
+                            <a href="#" class="btn" style="margin-top: 10px; padding: 0.7rem 1.5rem;">Download CV (PDF)</a>
+                        </div>
+                    </div>
+                    <div class="social-links">
+                        <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+                <div class="contact-form">
+                    <h3>Send a Message</h3>
+                    <form id="contactForm">
+                        <div class="form-group">
+                            <label for="name">Full Name</label>
+                            <input type="text" id="name" class="form-control" placeholder="Your Name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email Address</label>
+                            <input type="email" id="email" class="form-control" placeholder="Your Email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="subject">Subject</label>
+                            <input type="text" id="subject" class="form-control" placeholder="Message Subject" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Message</label>
+                            <textarea id="message" class="form-control" placeholder="Your Message..." required></textarea>
+                        </div>
+                        <button type="submit" class="btn" style="width: 100%;">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; <span id="currentYear"></span> Ahmed Hassan - Professional Quantity Surveyor Portfolio</p>
+            <p>Designed for GitHub Pages | All rights reserved</p>
+        </div>
+    </footer>
+
+    <!-- External JavaScript -->
+    <script src="js/main.js"></script>
+    <script src="js/threejs-tools.js"></script>
+</body>
+</html>
