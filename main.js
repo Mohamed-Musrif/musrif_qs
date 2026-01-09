@@ -426,26 +426,10 @@ function initBurjKhalifaAnimation() {
     // Start animation
     animate();
     
-    // Add animation label
-    const animationLabel = document.createElement('div');
-    animationLabel.style.cssText = `
-        position: absolute;
-        bottom: 15px;
-        left: 0;
-        right: 0;
-        text-align: center;
-        color: #d4af37;
-        font-size: 14px;
-        font-weight: bold;
-        z-index: 10;
-        font-family: 'Montserrat', sans-serif;
-        text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
-        background: rgba(13, 27, 42, 0.7);
-        padding: 8px;
-        border-radius: 0 0 15px 15px;
-    `;
+ 
    
   
 }
+
 
 
