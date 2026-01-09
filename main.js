@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', function() {
     setupFormValidation();
     setupSmoothScrolling();
     setupParallaxEffect();
-    initFastBuildingAnimation(); // Fast 4-second animation
+    initContinuousBuildingAnimation(); // Continuous animation
     setupAnimations();
 });
 
@@ -122,8 +122,8 @@ function setupParallaxEffect() {
     });
 }
 
-// Fast 4-Second Building Construction Animation
-function initFastBuildingAnimation() {
+// Continuous Building Construction Animation
+function initContinuousBuildingAnimation() {
     const container = document.getElementById('tool-container');
     if (!container) return;
     
@@ -133,31 +133,37 @@ function initFastBuildingAnimation() {
         return;
     }
     
+    // Make container larger for 1/3 screen
+    const screenWidth = window.innerWidth;
+    const containerSize = Math.min(screenWidth * 0.33, 400); // 1/3 of screen or max 400px
+    container.style.width = containerSize + 'px';
+    container.style.height = containerSize + 'px';
+    
     // Create scene
     const scene = new THREE.Scene();
     scene.background = new THREE.Color(0x0d1b2a);
     
     // Create camera
     const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 1000);
-    camera.position.set(6, 5, 8);
-    camera.lookAt(0, 3, 0);
+    camera.position.set(8, 7, 12);
+    camera.lookAt(0, 5, 0);
     
     // Create renderer
     const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
-    renderer.setSize(250, 250);
+    renderer.setSize(containerSize, containerSize);
     renderer.setClearColor(0x000000, 0);
     container.appendChild(renderer.domElement);
     
     // Add lighting
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.7);
     scene.add(ambientLight);
     
-    const directionalLight = new THREE.DirectionalLight(0xf97316, 1);
-    directionalLight.position.set(5, 10, 5);
+    const directionalLight = new THREE.DirectionalLight(0xf97316, 1.2);
+    directionalLight.position.set(10, 15, 10);
     scene.add(directionalLight);
     
     // Create ground
-    const groundGeometry = new THREE.PlaneGeometry(15, 15);
+    const groundGeometry = new THREE.PlaneGeometry(20, 20);
     const groundMaterial = new THREE.MeshStandardMaterial({ 
         color: 0x2d3748,
         roughness: 0.9
@@ -168,12 +174,12 @@ function initFastBuildingAnimation() {
     scene.add(ground);
     
     // Add grid
-    const gridHelper = new THREE.GridHelper(15, 15, 0x4a5568, 0x2d3748);
+    const gridHelper = new THREE.GridHelper(20, 20, 0x4a5568, 0x2d3748);
     gridHelper.position.y = -0.49;
     scene.add(gridHelper);
     
     // Building foundation
-    const foundationGeometry = new THREE.BoxGeometry(3, 0.4, 3);
+    const foundationGeometry = new THREE.BoxGeometry(4, 0.5, 4);
     const foundationMaterial = new THREE.MeshStandardMaterial({ 
         color: 0x4a5568
     });
@@ -185,41 +191,84 @@ function initFastBuildingAnimation() {
     const craneGroup = new THREE.Group();
     
     const craneBase = new THREE.Mesh(
-        new THREE.BoxGeometry(0.4, 1, 0.4),
+        new THREE.BoxGeometry(0.5, 1.5, 0.5),
         new THREE.MeshStandardMaterial({ color: 0x718096 })
     );
-    craneBase.position.set(-4, 0.5, -2);
+    craneBase.position.set(-6, 0.75, -3);
     craneGroup.add(craneBase);
     
     const craneArm = new THREE.Mesh(
-        new THREE.BoxGeometry(6, 0.1, 0.1),
+        new THREE.BoxGeometry(10, 0.15, 0.15),
         new THREE.MeshStandardMaterial({ color: 0xf97316 })
     );
-    craneArm.position.set(-1, 4, -2);
+    craneArm.position.set(-1, 6, -3);
     craneGroup.add(craneArm);
+    
+    const craneHook = new THREE.Mesh(
+        new THREE.ConeGeometry(0.2, 0.5, 8),
+        new THREE.MeshStandardMaterial({ color: 0xd4af37 })
+    );
+    craneHook.position.set(3, 4, -3);
+    craneHook.rotation.x = Math.PI;
+    craneGroup.add(craneHook);
     
     scene.add(craneGroup);
     
+    // Building parameters
+    const buildingWidth = 4;
+    const buildingDepth = 4;
+    const floorHeight = 1;
+    const totalFloors = 5;
+    const floors = [];
+    const floorColors = [
+        0xf97316, // Orange
+        0xd4af37, // Gold
+        0x2d3748, // Charcoal
+        0x0d1b2a, // Navy
+        0xf97316  // Orange (top)
+    ];
+    
     // Animation variables
     let animationTime = 0;
-    let currentFloor = 0;
-    let buildingComplete = false;
-    const totalAnimationTime = 4;
-    const totalFloors = 4;
-    const floorHeight = 0.8;
-    const floors = [];
-    const floorColors = [0xf97316, 0xd4af37, 0x2d3748, 0x0d1b2a];
+    let currentCycle = 0;
+    let floorsBuilt = 0;
+    let buildingState = 'constructing'; // constructing, complete, resetting
+    
+    // Create all floors initially (hidden)
+    for (let i = 0; i < totalFloors; i++) {
+        const floorGeometry = new THREE.BoxGeometry(buildingWidth, floorHeight, buildingDepth);
+        const floorMaterial = new THREE.MeshStandardMaterial({ 
+            color: floorColors[i],
+            transparent: true,
+            opacity: 0
+        });
+        const floor = new THREE.Mesh(floorGeometry, floorMaterial);
+        floor.position.y = i * floorHeight + 0.5;
+        floor.scale.y = 0.1;
+        floor.userData.index = i;
+        floors.push(floor);
+        scene.add(floor);
+        
+        // Add construction lines
+        const edges = new THREE.EdgesGeometry(floorGeometry);
+        const line = new THREE.LineSegments(edges, new THREE.LineBasicMaterial({ 
+            color: 0xffffff
+        }));
+        floor.add(line);
+    }
     
     // Handle window resize
     window.addEventListener('resize', function() {
         const container = document.getElementById('tool-container');
         if (!container || !camera || !renderer) return;
         
-        const width = container.clientWidth;
-        const height = container.clientHeight;
+        const screenWidth = window.innerWidth;
+        const containerSize = Math.min(screenWidth * 0.33, 400);
+        container.style.width = containerSize + 'px';
+        container.style.height = containerSize + 'px';
         
-        renderer.setSize(width, height);
-        camera.aspect = width / height;
+        renderer.setSize(containerSize, containerSize);
+        camera.aspect = 1;
         camera.updateProjectionMatrix();
     });
     
@@ -227,88 +276,113 @@ function initFastBuildingAnimation() {
     function animate() {
         requestAnimationFrame(animate);
         
-        animationTime += 0.016;
-        const progress = Math.min(animationTime / totalAnimationTime, 1);
+        animationTime += 0.016; // ~60fps
+        const cycleTime = animationTime % 8; // 8-second cycle
         
-        // Camera movement
-        camera.position.x = 6 * Math.cos(progress * Math.PI * 0.5);
-        camera.position.z = 8 * Math.sin(progress * Math.PI * 0.5);
-        camera.lookAt(0, 3, 0);
+        // Camera movement (continuous slow rotation)
+        camera.position.x = 8 * Math.cos(animationTime * 0.1);
+        camera.position.z = 12 * Math.sin(animationTime * 0.1);
+        camera.lookAt(0, 6, 0);
         
         // Crane movement
-        craneArm.rotation.y = Math.sin(progress * Math.PI * 4) * 0.3;
+        craneArm.rotation.y = Math.sin(animationTime * 1.5) * 0.4;
+        craneHook.position.x = 3 + Math.cos(animationTime * 2) * 2;
+        craneHook.position.y = 4 + Math.sin(animationTime * 3) * 1.5;
         
-        // Building construction
-        if (!buildingComplete) {
-            const targetFloor = Math.floor(progress * totalFloors);
+        // Building construction cycle
+        if (cycleTime < 6) {
+            // Construction phase (6 seconds)
+            buildingState = 'constructing';
+            const constructionProgress = cycleTime / 6; // 0 to 1
             
-            while (currentFloor < targetFloor && currentFloor < totalFloors) {
-                currentFloor++;
-                
-                const floorGeometry = new THREE.BoxGeometry(3, floorHeight, 3);
-                const floorMaterial = new THREE.MeshStandardMaterial({ 
-                    color: floorColors[currentFloor - 1],
-                    transparent: true,
-                    opacity: 0
-                });
-                const floor = new THREE.Mesh(floorGeometry, floorMaterial);
-                floor.position.y = (currentFloor - 1) * floorHeight + 0.4;
-                floor.scale.y = 0.1;
-                floors.push(floor);
-                scene.add(floor);
-                
-                const edges = new THREE.EdgesGeometry(floorGeometry);
-                const line = new THREE.LineSegments(edges, new THREE.LineBasicMaterial({ 
-                    color: 0xffffff
-                }));
-                floor.add(line);
-            }
+            // Determine which floor should be visible
+            const targetFloor = Math.floor(constructionProgress * totalFloors);
             
+            // Update floors
             floors.forEach((floor, index) => {
-                const floorProgress = (progress - (index / totalFloors)) * totalFloors;
-                
-                if (floorProgress >= 0 && floorProgress <= 0.5) {
-                    const growProgress = Math.min(floorProgress * 2, 1);
-                    floor.scale.y = 0.1 + (growProgress * 0.9);
-                    floor.material.opacity = growProgress;
-                } else if (floorProgress > 0.5) {
-                    floor.scale.y = 1;
-                    floor.material.opacity = 1;
+                if (index <= targetFloor) {
+                    // This floor should be (partially) visible
+                    const floorProgress = (constructionProgress - (index / totalFloors)) * totalFloors;
+                    
+                    if (floorProgress >= 0 && floorProgress <= 0.8) {
+                        // Grow animation
+                        const growProgress = Math.min(floorProgress * 1.25, 1);
+                        floor.scale.y = 0.1 + (growProgress * 0.9);
+                        floor.material.opacity = growProgress;
+                    } else if (floorProgress > 0.8) {
+                        // Fully grown
+                        floor.scale.y = 1;
+                        floor.material.opacity = 1;
+                    }
+                } else {
+                    // Floor not built yet
+                    floor.scale.y = 0.1;
+                    floor.material.opacity = 0;
                 }
                 
-                if (progress >= 0.9 && index === floors.length - 1) {
-                    const pulse = Math.sin(animationTime * 5) * 0.05 + 1;
+                // Gentle pulse for completed floors
+                if (index <= targetFloor - 1) {
+                    const pulse = Math.sin(animationTime * 2 + index) * 0.05 + 1;
                     floor.scale.set(pulse, pulse, pulse);
                 }
             });
             
-            if (progress >= 0.9 && currentFloor >= totalFloors) {
-                buildingComplete = true;
+            floorsBuilt = targetFloor + 1;
+            
+        } else {
+            // Completion phase (2 seconds) - building complete, gentle pulse
+            buildingState = 'complete';
+            const completeProgress = (cycleTime - 6) / 2;
+            
+            // All floors visible and pulsing
+            floors.forEach((floor, index) => {
+                floor.scale.y = 1;
+                floor.material.opacity = 1;
+                
+                // Pulsing effect
+                const pulse = Math.sin(animationTime * 3 + index) * 0.1 + 1;
+                floor.scale.set(pulse, pulse, pulse);
+                
+                // Glow effect on top floor
+                if (index === totalFloors - 1) {
+                    floor.material.emissive = new THREE.Color(0xd4af37);
+                    floor.material.emissiveIntensity = 0.2 + Math.sin(animationTime * 4) * 0.1;
+                }
+            });
+            
+            // Reset after completion phase
+            if (completeProgress >= 0.95) {
+                // Reset for next cycle
+                floorsBuilt = 0;
+                currentCycle++;
             }
         }
         
+        // Render the scene
         renderer.render(scene, camera);
     }
     
     // Start animation
     animate();
     
-    // Add label
-    const progressText = document.createElement('div');
-    progressText.style.cssText = `
+    // Add animation label
+    const animationLabel = document.createElement('div');
+    animationLabel.style.cssText = `
         position: absolute;
-        bottom: 10px;
+        bottom: 15px;
         left: 0;
         right: 0;
         text-align: center;
         color: #d4af37;
-        font-size: 11px;
+        font-size: 14px;
         font-weight: bold;
         z-index: 10;
         font-family: 'Montserrat', sans-serif;
+        text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
+        letter-spacing: 1px;
     `;
-    progressText.innerHTML = '🏗️ Building Construction';
-    container.appendChild(progressText);
+    animationLabel.innerHTML = '🏗️ Continuous Construction';
+    container.appendChild(animationLabel);
 }
 
 // Setup animations
