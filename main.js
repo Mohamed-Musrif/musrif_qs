@@ -4,7 +4,7 @@ const navLinks = document.getElementById('navLinks');
 const contactForm = document.getElementById('contactForm');
 const currentYear = document.getElementById('currentYear');
 
-// Initialize when DOM is loaded
+//a Initialize when DOM is loaded
 document.addEventListener('DOMContentLoaded', function() {
     initMobileMenu();
     setCurrentYear();
@@ -795,4 +795,5 @@ function initBurjKhalifaAnimation() {
     // Start animation
     animate();
 }
+
 
