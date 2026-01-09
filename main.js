@@ -135,7 +135,7 @@ function initFastBuildingAnimation() {
     
     // Create scene
     const scene = new THREE.Scene();
-    scene.background = new THREE.Color(0x0d1b2a); // Dark navy background
+    scene.background = new THREE.Color(0x0d1b2a);
     
     // Create camera
     const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 1000);
@@ -144,7 +144,7 @@ function initFastBuildingAnimation() {
     
     // Create renderer
     const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
-    renderer.setSize(300, 300);
+    renderer.setSize(250, 250);
     renderer.setClearColor(0x000000, 0);
     container.appendChild(renderer.domElement);
     
@@ -167,28 +167,13 @@ function initFastBuildingAnimation() {
     ground.position.y = -0.5;
     scene.add(ground);
     
-    // Add simple grid
+    // Add grid
     const gridHelper = new THREE.GridHelper(15, 15, 0x4a5568, 0x2d3748);
     gridHelper.position.y = -0.49;
     scene.add(gridHelper);
     
-    // Building parameters
-    const buildingWidth = 3;
-    const buildingDepth = 3;
-    const floorHeight = 0.8;
-    const totalFloors = 4; // Reduced for faster animation
-    const floors = [];
-    
-    // Colors for floors
-    const floorColors = [
-        0xf97316, // Construction orange - ground floor
-        0xd4af37, // Gold - first floor
-        0x2d3748, // Charcoal - second floor
-        0x0d1b2a  // Navy - third floor
-    ];
-    
-    // Create building foundation
-    const foundationGeometry = new THREE.BoxGeometry(buildingWidth, 0.4, buildingDepth);
+    // Building foundation
+    const foundationGeometry = new THREE.BoxGeometry(3, 0.4, 3);
     const foundationMaterial = new THREE.MeshStandardMaterial({ 
         color: 0x4a5568
     });
@@ -196,10 +181,9 @@ function initFastBuildingAnimation() {
     foundation.position.y = 0;
     scene.add(foundation);
     
-    // Create a simple crane
+    // Simple crane
     const craneGroup = new THREE.Group();
     
-    // Crane base
     const craneBase = new THREE.Mesh(
         new THREE.BoxGeometry(0.4, 1, 0.4),
         new THREE.MeshStandardMaterial({ color: 0x718096 })
@@ -207,7 +191,6 @@ function initFastBuildingAnimation() {
     craneBase.position.set(-4, 0.5, -2);
     craneGroup.add(craneBase);
     
-    // Crane arm
     const craneArm = new THREE.Mesh(
         new THREE.BoxGeometry(6, 0.1, 0.1),
         new THREE.MeshStandardMaterial({ color: 0xf97316 })
@@ -221,7 +204,11 @@ function initFastBuildingAnimation() {
     let animationTime = 0;
     let currentFloor = 0;
     let buildingComplete = false;
-    const totalAnimationTime = 4; // 4 seconds total
+    const totalAnimationTime = 4;
+    const totalFloors = 4;
+    const floorHeight = 0.8;
+    const floors = [];
+    const floorColors = [0xf97316, 0xd4af37, 0x2d3748, 0x0d1b2a];
     
     // Handle window resize
     window.addEventListener('resize', function() {
@@ -240,30 +227,25 @@ function initFastBuildingAnimation() {
     function animate() {
         requestAnimationFrame(animate);
         
-        animationTime += 0.016; // ~60fps
-        
-        // Calculate progress (0 to 1 over 4 seconds)
+        animationTime += 0.016;
         const progress = Math.min(animationTime / totalAnimationTime, 1);
         
-        // Rotate camera slowly
+        // Camera movement
         camera.position.x = 6 * Math.cos(progress * Math.PI * 0.5);
         camera.position.z = 8 * Math.sin(progress * Math.PI * 0.5);
         camera.lookAt(0, 3, 0);
         
-        // Move crane arm
+        // Crane movement
         craneArm.rotation.y = Math.sin(progress * Math.PI * 4) * 0.3;
         
-        // Building construction animation
+        // Building construction
         if (!buildingComplete) {
-            // Determine which floor should be visible based on progress
             const targetFloor = Math.floor(progress * totalFloors);
             
-            // Add new floors if needed
             while (currentFloor < targetFloor && currentFloor < totalFloors) {
                 currentFloor++;
                 
-                // Create new floor
-                const floorGeometry = new THREE.BoxGeometry(buildingWidth, floorHeight, buildingDepth);
+                const floorGeometry = new THREE.BoxGeometry(3, floorHeight, 3);
                 const floorMaterial = new THREE.MeshStandardMaterial({ 
                     color: floorColors[currentFloor - 1],
                     transparent: true,
@@ -271,11 +253,10 @@ function initFastBuildingAnimation() {
                 });
                 const floor = new THREE.Mesh(floorGeometry, floorMaterial);
                 floor.position.y = (currentFloor - 1) * floorHeight + 0.4;
-                floor.scale.y = 0.1; // Start small
+                floor.scale.y = 0.1;
                 floors.push(floor);
                 scene.add(floor);
                 
-                // Add construction lines
                 const edges = new THREE.EdgesGeometry(floorGeometry);
                 const line = new THREE.LineSegments(edges, new THREE.LineBasicMaterial({ 
                     color: 0xffffff
@@ -283,53 +264,45 @@ function initFastBuildingAnimation() {
                 floor.add(line);
             }
             
-            // Animate existing floors
             floors.forEach((floor, index) => {
                 const floorProgress = (progress - (index / totalFloors)) * totalFloors;
                 
                 if (floorProgress >= 0 && floorProgress <= 0.5) {
-                    // Grow animation (0.5 seconds per floor)
                     const growProgress = Math.min(floorProgress * 2, 1);
                     floor.scale.y = 0.1 + (growProgress * 0.9);
                     floor.material.opacity = growProgress;
                 } else if (floorProgress > 0.5) {
-                    // Fully grown
                     floor.scale.y = 1;
                     floor.material.opacity = 1;
                 }
                 
-                // Pulse effect when complete
                 if (progress >= 0.9 && index === floors.length - 1) {
                     const pulse = Math.sin(animationTime * 5) * 0.05 + 1;
                     floor.scale.set(pulse, pulse, pulse);
                 }
             });
             
-            // Check if building is complete
             if (progress >= 0.9 && currentFloor >= totalFloors) {
                 buildingComplete = true;
             }
         }
         
-        // Render the scene
-        if (renderer && scene && camera) {
-            renderer.render(scene, camera);
-        }
+        renderer.render(scene, camera);
     }
     
     // Start animation
     animate();
     
-    // Add progress text
+    // Add label
     const progressText = document.createElement('div');
     progressText.style.cssText = `
         position: absolute;
-        bottom: 15px;
+        bottom: 10px;
         left: 0;
         right: 0;
         text-align: center;
-        color: var(--construction-gold);
-        font-size: 12px;
+        color: #d4af37;
+        font-size: 11px;
         font-weight: bold;
         z-index: 10;
         font-family: 'Montserrat', sans-serif;
@@ -340,17 +313,14 @@ function initFastBuildingAnimation() {
 
 // Setup animations
 function setupAnimations() {
-    // Add animation classes to elements on page load
     document.body.classList.add('page-transition');
     
-    // Add animation delay to skill cards
     const skillCards = document.querySelectorAll('.skill-card');
     skillCards.forEach((card, index) => {
         card.style.animationDelay = `${index * 0.1}s`;
         card.classList.add('fade-in');
     });
     
-    // Add animation delay to project cards
     const projectCards = document.querySelectorAll('.project-card');
     projectCards.forEach((card, index) => {
         card.style.animationDelay = `${index * 0.15}s`;
@@ -358,7 +328,7 @@ function setupAnimations() {
     });
 }
 
-// Handle window resize with debounce
+// Handle window resize
 function debounce(func, wait) {
     let timeout;
     return function executedFunction(...args) {
@@ -372,7 +342,6 @@ function debounce(func, wait) {
 }
 
 window.addEventListener('resize', debounce(function() {
-    // Close mobile menu on resize to desktop
     if (window.innerWidth > 768 && navLinks) {
         navLinks.classList.remove('active');
         if (mobileMenuBtn) {
