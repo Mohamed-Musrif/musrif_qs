@@ -322,7 +322,7 @@ header {
 
 /* ===== 3D Animation Container - UPDATED ===== */
 #tool-container {
-    flex: 0 0 380px; /* Square dimensions */
+    flex: 0 0 480px; /* Square dimensions */
     width: 480px; /* Square width */
     height: 480px; /* Square height - same as width */
     border-radius: 15px;
@@ -836,4 +836,5 @@ footer {
         height: 240px;
     }
 }
+
 
