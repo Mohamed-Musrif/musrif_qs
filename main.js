@@ -444,6 +444,7 @@ function initBurjKhalifaAnimation() {
         padding: 8px;
         border-radius: 0 0 15px 15px;
     `;
-    animationLabel.innerHTML = '🏗️ Burj Khalifa Style Construction';
+    animationLabel.innerHTML = '';
     container.appendChild(animationLabel);
 }
+
