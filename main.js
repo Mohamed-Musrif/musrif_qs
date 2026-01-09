@@ -1,44 +1,20 @@
 // DOM Elements
-const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-const navLinks = document.getElementById('navLinks');
 const contactForm = document.getElementById('contactForm');
-const currentYear = document.getElementById('currentYear');
+const constructionAnimation = document.getElementById('construction-animation');
 
 // Initialize when DOM is loaded
 document.addEventListener('DOMContentLoaded', function() {
-    initMobileMenu();
-    setCurrentYear();
+    initBurjKhalifaAnimation();
     setupFormValidation();
     setupSmoothScrolling();
-    setupParallaxEffect();
-    initBurjKhalifaAnimation(); // Burj Khalifa style continuous animation
-    setupAnimations();
+    setCurrentYear();
 });
-
-// Mobile Navigation Toggle
-function initMobileMenu() {
-    if (!mobileMenuBtn || !navLinks) return;
-    
-    mobileMenuBtn.addEventListener('click', () => {
-        navLinks.classList.toggle('active');
-        mobileMenuBtn.innerHTML = navLinks.classList.contains('active') 
-            ? '<i class="fas fa-times"></i>' 
-            : '<i class="fas fa-bars"></i>';
-    });
-    
-    // Close mobile menu when clicking a link
-    document.querySelectorAll('.nav-links a').forEach(link => {
-        link.addEventListener('click', () => {
-            navLinks.classList.remove('active');
-            mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
-        });
-    });
-}
 
 // Set current year in footer
 function setCurrentYear() {
-    if (currentYear) {
-        currentYear.textContent = new Date().getFullYear();
+    const yearElement = document.querySelector('.portfolio-footer p');
+    if (yearElement) {
+        yearElement.innerHTML = yearElement.innerHTML.replace('2024', new Date().getFullYear());
     }
 }
 
@@ -49,38 +25,71 @@ function setupFormValidation() {
     contactForm.addEventListener('submit', function(e) {
         e.preventDefault();
         
-        // Basic validation
-        const name = document.getElementById('name').value.trim();
-        const email = document.getElementById('email').value.trim();
-        const subject = document.getElementById('subject').value.trim();
-        const message = document.getElementById('message').value.trim();
+        // Get form values
+        const name = this.querySelector('input[type="text"]').value.trim();
+        const email = this.querySelector('input[type="email"]').value.trim();
+        const subject = this.querySelectorAll('input[type="text"]')[1].value.trim();
+        const message = this.querySelector('textarea').value.trim();
         
+        // Basic validation
         if (!name || !email || !subject || !message) {
-            alert('Please fill in all required fields.');
+            showAlert('Please fill in all required fields.', 'error');
             return;
         }
         
         // Email validation
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!emailRegex.test(email)) {
-            alert('Please enter a valid email address.');
+            showAlert('Please enter a valid email address.', 'error');
             return;
         }
         
         // Simulate form submission
-        const submitBtn = contactForm.querySelector('button[type="submit"]');
+        const submitBtn = this.querySelector('button[type="submit"]');
         const originalText = submitBtn.textContent;
         
         submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
         submitBtn.disabled = true;
         
         setTimeout(() => {
-            alert('Thank you for your message, Aliyar! I will get back to you soon.');
-            contactForm.reset();
+            showAlert('Thank you for your message! I will get back to you soon.', 'success');
+            this.reset();
             submitBtn.textContent = originalText;
             submitBtn.disabled = false;
         }, 1500);
     });
+}
+
+// Show alert message
+function showAlert(message, type) {
+    const alertDiv = document.createElement('div');
+    alertDiv.className = `alert alert-${type}`;
+    alertDiv.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        padding: 1rem 1.5rem;
+        background: ${type === 'success' ? '#10b981' : '#ef4444'};
+        color: white;
+        border-radius: 8px;
+        z-index: 10000;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        animation: slideIn 0.3s ease;
+    `;
+    
+    alertDiv.innerHTML = `
+        <div style="display: flex; align-items: center; gap: 0.5rem;">
+            <i class="fas ${type === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle'}"></i>
+            <span>${message}</span>
+        </div>
+    `;
+    
+    document.body.appendChild(alertDiv);
+    
+    setTimeout(() => {
+        alertDiv.style.animation = 'slideOut 0.3s ease';
+        setTimeout(() => alertDiv.remove(), 300);
+    }, 3000);
 }
 
 // Smooth scrolling for anchor links
@@ -95,7 +104,7 @@ function setupSmoothScrolling() {
             const targetElement = document.querySelector(targetId);
             if (targetElement) {
                 window.scrollTo({
-                    top: targetElement.offsetTop - 80,
+                    top: targetElement.offsetTop - 100,
                     behavior: 'smooth'
                 });
             }
@@ -103,54 +112,26 @@ function setupSmoothScrolling() {
     });
 }
 
-// Parallax effect on scroll
-function setupParallaxEffect() {
-    window.addEventListener('scroll', function() {
-        const scrolled = window.pageYOffset;
-        
-        // Sticky header effect
-        const header = document.querySelector('header');
-        if (!header) return;
-        
-        if (scrolled > 100) {
-            header.style.backgroundColor = 'rgba(13, 27, 42, 0.98)';
-            header.style.boxShadow = '0 5px 20px rgba(0, 0, 0, 0.1)';
-        } else {
-            header.style.backgroundColor = 'rgba(13, 27, 42, 0.95)';
-            header.style.boxShadow = '0 2px 10px rgba(0, 0, 0, 0.1)';
-        }
-    });
-}
-
-// Burj Khalifa Style Continuous Building Animation
+// Burj Khalifa Style 3D Animation
 function initBurjKhalifaAnimation() {
-    const container = document.getElementById('tool-container');
-    if (!container) return;
-    
-    // Check if Three.js is loaded
-    if (typeof THREE === 'undefined') {
-        console.error('Three.js is not loaded. Cannot initialize building animation.');
+    if (!constructionAnimation || typeof THREE === 'undefined') {
         return;
     }
     
-    // Make container larger for 1/3 screen
-    const screenWidth = window.innerWidth;
-    const containerSize = Math.min(screenWidth * 0.33, 450); // 1/3 of screen or max 450px
-    container.style.width = containerSize + 'px';
-    container.style.height = containerSize + 'px';
+    const container = constructionAnimation;
+    const width = container.clientWidth;
+    const height = container.clientHeight;
     
     // Create scene
     const scene = new THREE.Scene();
-    scene.background = new THREE.Color(0x0d1b2a);
     
     // Create camera
-    const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 1000);
-    camera.position.set(12, 15, 18);
-    camera.lookAt(0, 20, 0);
+    const camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 1000);
+    camera.position.set(15, 20, 25);
     
     // Create renderer
     const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
-    renderer.setSize(containerSize, containerSize);
+    renderer.setSize(width, height);
     renderer.setClearColor(0x000000, 0);
     container.appendChild(renderer.domElement);
     
@@ -158,58 +139,22 @@ function initBurjKhalifaAnimation() {
     const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
     scene.add(ambientLight);
     
-    const directionalLight = new THREE.DirectionalLight(0xf97316, 1.5);
-    directionalLight.position.set(15, 30, 15);
+    const directionalLight = new THREE.DirectionalLight(0xf97316, 1);
+    directionalLight.position.set(20, 30, 20);
     scene.add(directionalLight);
     
-    // Create sky background (gradient effect)
-    const skyGeometry = new THREE.SphereGeometry(100, 32, 32);
-    const skyMaterial = new THREE.MeshBasicMaterial({ 
-        color: 0x0d1b2a,
-        side: THREE.BackSide
-    });
-    const sky = new THREE.Mesh(skyGeometry, skyMaterial);
-    scene.add(sky);
-    
-    // Add some stars
-    const starsGeometry = new THREE.BufferGeometry();
-    const starsCount = 1000;
-    const starsPositions = new Float32Array(starsCount * 3);
-    
-    for (let i = 0; i < starsCount * 3; i += 3) {
-        starsPositions[i] = (Math.random() - 0.5) * 200;
-        starsPositions[i + 1] = (Math.random() - 0.5) * 200;
-        starsPositions[i + 2] = (Math.random() - 0.5) * 200;
-    }
-    
-    starsGeometry.setAttribute('position', new THREE.BufferAttribute(starsPositions, 3));
-    const starsMaterial = new THREE.PointsMaterial({ 
-        color: 0xffffff,
-        size: 0.5,
-        transparent: true,
-        opacity: 0.8
-    });
-    const stars = new THREE.Points(starsGeometry, starsMaterial);
-    scene.add(stars);
-    
     // Create ground
-    const groundGeometry = new THREE.PlaneGeometry(50, 50);
+    const groundGeometry = new THREE.PlaneGeometry(40, 40);
     const groundMaterial = new THREE.MeshStandardMaterial({ 
-        color: 0x1a2a3a,
+        color: 0x2d3748,
         roughness: 0.8
     });
     const ground = new THREE.Mesh(groundGeometry, groundMaterial);
     ground.rotation.x = -Math.PI / 2;
-    ground.position.y = -1;
     scene.add(ground);
     
-    // Add city grid
-    const gridHelper = new THREE.GridHelper(50, 50, 0x2d3748, 0x1a2a3a);
-    gridHelper.position.y = -0.99;
-    scene.add(gridHelper);
-    
-    // Create Burj Khalifa foundation (wider base)
-    const foundationGeometry = new THREE.CylinderGeometry(4, 4, 1, 32);
+    // Create building foundation
+    const foundationGeometry = new THREE.CylinderGeometry(4, 4, 1, 16);
     const foundationMaterial = new THREE.MeshStandardMaterial({ 
         color: 0x4a5568,
         roughness: 0.9
@@ -218,351 +163,154 @@ function initBurjKhalifaAnimation() {
     foundation.position.y = 0.5;
     scene.add(foundation);
     
-    // Building parameters for Burj Khalifa style
-    const totalSections = 8; // More sections for tapered effect
-    const baseRadius = 3.5;
-    const topRadius = 0.8;
-    const totalHeight = 35;
+    // Create building sections
     const sections = [];
-    const sectionColors = [
-        0x4a5568, // Dark gray
-        0x2d3748, // Charcoal
-        0x0d1b2a, // Navy
-        0x1a2a3a, // Dark blue
-        0xf97316, // Orange
-        0xd4af37, // Gold
-        0x2d3748, // Charcoal
-        0x0d1b2a  // Navy
-    ];
+    const totalSections = 6;
+    const baseRadius = 3;
+    const topRadius = 1;
+    const totalHeight = 25;
     
-    // Create construction cranes (multiple)
-    const cranes = [];
-    const cranePositions = [
-        { x: -8, z: -5 },
-        { x: 6, z: -7 },
-        { x: -5, z: 6 }
-    ];
-    
-    cranePositions.forEach((pos, index) => {
-        const craneGroup = new THREE.Group();
-        
-        // Crane base
-        const craneBase = new THREE.Mesh(
-            new THREE.CylinderGeometry(0.3, 0.5, 2, 8),
-            new THREE.MeshStandardMaterial({ color: 0x718096 })
-        );
-        craneBase.position.set(pos.x, 1, pos.z);
-        craneGroup.add(craneBase);
-        
-        // Crane tower
-        const craneTower = new THREE.Mesh(
-            new THREE.BoxGeometry(0.2, 25, 0.2),
-            new THREE.MeshStandardMaterial({ color: 0x4a5568 })
-        );
-        craneTower.position.set(pos.x, 12.5, pos.z);
-        craneGroup.add(craneTower);
-        
-        // Crane arm
-        const craneArmLength = 8 + index * 2;
-        const craneArm = new THREE.Mesh(
-            new THREE.BoxGeometry(craneArmLength, 0.1, 0.1),
-            new THREE.MeshStandardMaterial({ color: 0xf97316 })
-        );
-        craneArm.position.set(pos.x + craneArmLength/2 - 2, 24, pos.z);
-        craneGroup.add(craneArm);
-        
-        // Crane hook
-        const craneHook = new THREE.Mesh(
-            new THREE.SphereGeometry(0.2, 8, 8),
-            new THREE.MeshStandardMaterial({ color: 0xd4af37 })
-        );
-        craneHook.position.set(pos.x + 3, 20, pos.z);
-        craneGroup.add(craneHook);
-        
-        craneGroup.userData = {
-            basePos: { x: pos.x, z: pos.z },
-            armLength: craneArmLength,
-            hookSpeed: 2 + index * 0.5,
-            armSpeed: 0.5 + index * 0.2
-        };
-        
-        cranes.push(craneGroup);
-        scene.add(craneGroup);
-    });
-    
-    // Create all building sections initially (hidden)
     for (let i = 0; i < totalSections; i++) {
         const sectionHeight = totalHeight / totalSections;
-        const radiusRatio = i / totalSections;
-        const radius = baseRadius * (1 - radiusRatio * 0.7) + topRadius * (radiusRatio * 0.3);
-        const nextRadius = baseRadius * (1 - (i + 1) / totalSections * 0.7) + topRadius * ((i + 1) / totalSections * 0.3);
+        const radius = baseRadius * (1 - i / totalSections * 0.6);
+        const nextRadius = baseRadius * (1 - (i + 1) / totalSections * 0.6);
         
-        const sectionGeometry = new THREE.CylinderGeometry(
-            nextRadius, // top radius (smaller)
-            radius,     // bottom radius (larger)
-            sectionHeight,
-            16
-        );
-        
-        const sectionMaterial = new THREE.MeshStandardMaterial({ 
-            color: sectionColors[i],
-            transparent: true,
-            opacity: 0
+        const geometry = new THREE.CylinderGeometry(nextRadius, radius, sectionHeight, 12);
+        const material = new THREE.MeshStandardMaterial({ 
+            color: i % 2 === 0 ? 0x1e293b : 0x334155,
+            metalness: 0.3,
+            roughness: 0.7
         });
         
-        const section = new THREE.Mesh(sectionGeometry, sectionMaterial);
+        const section = new THREE.Mesh(geometry, material);
         section.position.y = i * sectionHeight + 1;
-        section.scale.y = 0.1; // Start very small
-        section.userData = {
-            index: i,
-            targetHeight: sectionHeight,
-            radius: radius
-        };
-        
+        section.userData = { index: i };
         sections.push(section);
         scene.add(section);
         
-        // Add construction grid to sections
-        const edges = new THREE.EdgesGeometry(sectionGeometry);
+        // Add edges
+        const edges = new THREE.EdgesGeometry(geometry);
         const line = new THREE.LineSegments(edges, new THREE.LineBasicMaterial({ 
-            color: 0xffffff,
+            color: 0xd4af37,
             linewidth: 1
         }));
         section.add(line);
     }
     
-    // Add spire/antenna at the top
-    const spireGeometry = new THREE.CylinderGeometry(0.3, 0.5, 8, 8);
-    const spireMaterial = new THREE.MeshStandardMaterial({ 
-        color: 0xd4af37,
-        emissive: 0xd4af37,
-        emissiveIntensity: 0.3
-    });
-    const spire = new THREE.Mesh(spireGeometry, spireMaterial);
-    spire.position.y = totalHeight + 1 + 4;
-    spire.visible = false;
-    scene.add(spire);
-    
-    // Animation variables for 12-second loop
-    let animationTime = 0;
-    const totalCycleTime = 12; // 12-second complete cycle
-    let buildingComplete = false;
-    
-    // Handle window resize
-    window.addEventListener('resize', function() {
-        const container = document.getElementById('tool-container');
-        if (!container || !camera || !renderer) return;
+    // Add cranes
+    const cranes = [];
+    for (let i = 0; i < 2; i++) {
+        const craneGroup = new THREE.Group();
         
-        const screenWidth = window.innerWidth;
-        const containerSize = Math.min(screenWidth * 0.33, 450);
-        container.style.width = containerSize + 'px';
-        container.style.height = containerSize + 'px';
+        // Crane base
+        const base = new THREE.Mesh(
+            new THREE.CylinderGeometry(0.3, 0.4, 1.5, 8),
+            new THREE.MeshStandardMaterial({ color: 0x64748b })
+        );
+        craneGroup.add(base);
         
-        renderer.setSize(containerSize, containerSize);
-        camera.aspect = 1;
-        camera.updateProjectionMatrix();
-    });
+        // Crane tower
+        const tower = new THREE.Mesh(
+            new THREE.BoxGeometry(0.15, 20, 0.15),
+            new THREE.MeshStandardMaterial({ color: 0x475569 })
+        );
+        tower.position.y = 10;
+        craneGroup.add(tower);
+        
+        // Crane arm
+        const arm = new THREE.Mesh(
+            new THREE.BoxGeometry(6 + i * 2, 0.1, 0.1),
+            new THREE.MeshStandardMaterial({ color: 0xf97316 })
+        );
+        arm.position.set(3 + i, 19, 0);
+        craneGroup.add(arm);
+        
+        craneGroup.position.set(-8 + i * 16, 0, -5);
+        craneGroup.userData = { speed: 1 + i * 0.5 };
+        cranes.push(craneGroup);
+        scene.add(craneGroup);
+    }
+    
+    // Animation variables
+    let time = 0;
+    let constructionPhase = 0;
     
     // Animation loop
     function animate() {
         requestAnimationFrame(animate);
+        time += 0.01;
         
-        animationTime += 0.016; // ~60fps
-        const cycleTime = animationTime % totalCycleTime; // 12-second cycle
+        // Camera rotation
+        camera.position.x = 20 * Math.cos(time * 0.1);
+        camera.position.z = 20 * Math.sin(time * 0.1);
+        camera.lookAt(0, 10, 0);
         
-        // Calculate progress through the cycle (0 to 1)
-        const progress = cycleTime / totalCycleTime;
+        // Animate building construction
+        constructionPhase = (Math.sin(time * 0.3) + 1) / 2;
         
-        // Smooth camera rotation around the building
-        const cameraRadius = 25;
-        const cameraHeight = 20 + Math.sin(animationTime * 0.05) * 5;
-        camera.position.x = cameraRadius * Math.cos(animationTime * 0.1);
-        camera.position.z = cameraRadius * Math.sin(animationTime * 0.1);
-        camera.position.y = cameraHeight;
-        camera.lookAt(0, 15, 0);
+        sections.forEach((section, index) => {
+            const progress = constructionPhase - (index / sections.length);
+            
+            if (progress > 0) {
+                const visibleProgress = Math.min(progress * sections.length, 1);
+                section.scale.y = 0.1 + visibleProgress * 0.9;
+                section.material.opacity = 0.3 + visibleProgress * 0.7;
+                section.material.transparent = true;
+                
+                // Gentle pulse
+                const pulse = Math.sin(time * 2 + index) * 0.05 + 1;
+                section.scale.x = pulse;
+                section.scale.z = pulse;
+            }
+        });
         
         // Animate cranes
         cranes.forEach((crane, index) => {
-            const data = crane.userData;
-            
-            // Rotate crane arms
-            const arm = crane.children[2];
-            arm.rotation.y = Math.sin(animationTime * data.armSpeed) * 0.5;
-            
-            // Move crane hooks
-            const hook = crane.children[3];
-            hook.position.x = data.basePos.x + Math.cos(animationTime * data.hookSpeed) * 4;
-            hook.position.y = 18 + Math.sin(animationTime * data.hookSpeed * 1.5) * 3;
-            hook.position.z = data.basePos.z + Math.sin(animationTime * data.hookSpeed * 0.7) * 2;
+            crane.children[2].rotation.y = Math.sin(time * crane.userData.speed) * 0.3;
         });
         
-        // Rotate stars slowly
-        stars.rotation.y += 0.0005;
-        
-        // Building construction phases
-        if (cycleTime < 10) {
-            // Construction phase (10 seconds)
-            const constructionProgress = cycleTime / 10; // 0 to 1 over 10 seconds
-            
-            // Calculate which sections should be visible
-            const targetSection = Math.floor(constructionProgress * totalSections);
-            
-            // Update each section
-            sections.forEach((section, index) => {
-                if (index <= targetSection) {
-                    // This section should be (partially) visible
-                    const sectionProgress = (constructionProgress - (index / totalSections)) * totalSections;
-                    
-                    if (sectionProgress >= 0 && sectionProgress <= 0.7) {
-                        // Grow animation (70% of section time)
-                        const growProgress = Math.min(sectionProgress * 1.428, 1); // 1/0.7 = 1.428
-                        section.scale.y = 0.1 + (growProgress * 0.9);
-                        section.material.opacity = growProgress * 0.9;
-                        
-                        // Gentle pulse during growth
-                        const pulse = Math.sin(animationTime * 3) * 0.05 + 1;
-                        section.scale.x = pulse;
-                        section.scale.z = pulse;
-                    } else if (sectionProgress > 0.7 && sectionProgress <= 0.9) {
-                        // Solidify (20% of section time)
-                        section.scale.y = 1;
-                        section.material.opacity = 0.9 + (sectionProgress - 0.7) * 0.5;
-                    } else if (sectionProgress > 0.9) {
-                        // Completed (10% of section time)
-                        section.scale.y = 1;
-                        section.material.opacity = 1;
-                        
-                        // Subtle glow for completed sections
-                        const glow = Math.sin(animationTime * 2 + index) * 0.05 + 0.95;
-                        section.scale.set(glow, 1, glow);
-                    }
-                } else {
-                    // Section not built yet
-                    section.scale.y = 0.1;
-                    section.material.opacity = 0;
-                }
-            });
-            
-            // Show spire when building is nearly complete
-            if (targetSection >= totalSections - 1 && constructionProgress > 0.95) {
-                spire.visible = true;
-                const spireProgress = (constructionProgress - 0.95) * 20; // Last 5%
-                spire.scale.y = Math.min(spireProgress, 1);
-                spire.material.emissiveIntensity = 0.3 + Math.sin(animationTime * 3) * 0.2;
-            } else {
-                spire.visible = false;
-            }
-            
-            buildingComplete = false;
-            
-        } else {
-            // Completion and celebration phase (2 seconds)
-            buildingComplete = true;
-            const celebrationProgress = (cycleTime - 10) / 2;
-            
-            // All sections fully visible
-            sections.forEach((section, index) => {
-                section.scale.y = 1;
-                section.material.opacity = 1;
-                
-                // Celebration pulse effect
-                const pulseSpeed = 3 + index * 0.5;
-                const pulse = Math.sin(animationTime * pulseSpeed + index) * 0.1 + 1;
-                section.scale.set(pulse, 1, pulse);
-                
-                // Color shifting for celebration
-                if (celebrationProgress > 0.5) {
-                    const hueShift = Math.sin(animationTime * 2 + index) * 0.1;
-                    section.material.color.offsetHSL(hueShift, 0, 0);
-                }
-            });
-            
-            // Spire effects
-            spire.visible = true;
-            spire.scale.y = 1;
-            spire.material.emissiveIntensity = 0.5 + Math.sin(animationTime * 5) * 0.3;
-            
-            // Add particles/sparkles during celebration
-            if (celebrationProgress > 0.7) {
-                spire.material.emissiveIntensity = 0.8 + Math.sin(animationTime * 8) * 0.4;
-            }
-            
-            // Reset building at end of celebration (smooth transition)
-            if (celebrationProgress > 0.95) {
-                // Gradually fade out for reset
-                const fadeOut = 1 - (celebrationProgress - 0.95) * 20;
-                sections.forEach(section => {
-                    section.material.opacity = fadeOut;
-                });
-                spire.material.opacity = fadeOut;
-            }
-        }
-        
-        // Render the scene
         renderer.render(scene, camera);
     }
     
+    // Handle window resize
+    window.addEventListener('resize', function() {
+        if (!container || !camera || !renderer) return;
+        
+        const newWidth = container.clientWidth;
+        const newHeight = container.clientHeight;
+        
+        camera.aspect = newWidth / newHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(newWidth, newHeight);
+    });
+    
     // Start animation
     animate();
-    
-    // Add animation label
-    const animationLabel = document.createElement('div');
-    animationLabel.style.cssText = `
-        position: absolute;
-        bottom: 20px;
-        left: 0;
-        right: 0;
-        text-align: center;
-        color: #d4af37;
-        font-size: 16px;
-        font-weight: bold;
-        z-index: 10;
-        font-family: 'Montserrat', sans-serif;
-        text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
-        letter-spacing: 1.5px;
-        background: rgba(13, 27, 42, 0.7);
-        padding: 8px;
-        border-radius: 0 0 15px 15px;
-    `;
-    animationLabel.innerHTML = '🏗️ Burj Khalifa Style Construction';
-    container.appendChild(animationLabel);
 }
 
-// Setup animations
-function setupAnimations() {
-    document.body.classList.add('page-transition');
-    
-    const skillCards = document.querySelectorAll('.skill-card');
-    skillCards.forEach((card, index) => {
-        card.style.animationDelay = `${index * 0.1}s`;
-        card.classList.add('fade-in');
-    });
-    
-    const projectCards = document.querySelectorAll('.project-card');
-    projectCards.forEach((card, index) => {
-        card.style.animationDelay = `${index * 0.15}s`;
-        card.classList.add('fade-in');
-    });
-}
-
-// Handle window resize
-function debounce(func, wait) {
-    let timeout;
-    return function executedFunction(...args) {
-        const later = () => {
-            clearTimeout(timeout);
-            func(...args);
-        };
-        clearTimeout(timeout);
-        timeout = setTimeout(later, wait);
-    };
-}
-
-window.addEventListener('resize', debounce(function() {
-    if (window.innerWidth > 768 && navLinks) {
-        navLinks.classList.remove('active');
-        if (mobileMenuBtn) {
-            mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+// Add CSS for alerts
+const style = document.createElement('style');
+style.textContent = `
+    @keyframes slideIn {
+        from {
+            transform: translateX(100%);
+            opacity: 0;
+        }
+        to {
+            transform: translateX(0);
+            opacity: 1;
         }
     }
-}, 250));
+    
+    @keyframes slideOut {
+        from {
+            transform: translateX(0);
+            opacity: 1;
+        }
+        to {
+            transform: translateX(100%);
+            opacity: 0;
+        }
+    }
+`;
+document.head.appendChild(style);
