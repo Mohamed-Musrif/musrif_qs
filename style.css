@@ -322,22 +322,47 @@ header {
 
 /* ===== 3D Animation Container - UPDATED ===== */
 #tool-container {
-    flex: 0 0 380px; /* Square dimensions */
-    width: 380px; /* Square width */
-    height: 380px; /* Square height - same as width */
-    border-radius: 15px;
+    flex: 0 0 500px; /* Increased from 380px */
+    width: 500px; /* Increased from 380px */
+    height: 500px; /* Increased from 380px */
+    border-radius: 12px;
     overflow: hidden;
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
-    border: 3px solid var(--construction-gold);
-    background: rgba(0, 0, 0, 0.3);
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.7);
+    border: 4px solid var(--construction-gold);
+    background: linear-gradient(135deg, rgba(13, 27, 42, 0.9) 0%, rgba(27, 38, 59, 0.8) 100%);
     position: relative;
-    margin-right: 20px; /* Added right margin for spacing */
+    margin-right: 30px;
 }
 
 #tool-container canvas {
     width: 100% !important;
     height: 100% !important;
     display: block;
+}
+
+/* Add overlay text for construction stages */
+.construction-overlay {
+    position: absolute;
+    top: 20px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    z-index: 100;
+    pointer-events: none;
+}
+
+.stage-indicator {
+    display: inline-block;
+    background: rgba(13, 27, 42, 0.85);
+    color: var(--construction-gold);
+    padding: 8px 20px;
+    border-radius: 25px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    font-size: 1.1rem;
+    border: 2px solid var(--construction-gold);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(5px);
 }
 
 /* Hide the animation label */
@@ -703,6 +728,7 @@ footer {
         margin-top: 2rem;
         width: 350px;
         height: 350px;
+        flex: 0 0 350px;
     }
 }
 
@@ -732,6 +758,7 @@ footer {
     #tool-container {
         width: 320px;
         height: 320px;
+        flex: 0 0 320px;
     }
 }
 
@@ -769,6 +796,7 @@ footer {
     #tool-container {
         width: 300px;
         height: 300px;
+        flex: 0 0 300px;
     }
     
     .cta-buttons {
@@ -808,6 +836,7 @@ footer {
     #tool-container {
         width: 280px;
         height: 280px;
+        flex: 0 0 280px;
     }
 }
 
@@ -815,6 +844,7 @@ footer {
     #tool-container {
         width: 260px;
         height: 260px;
+        flex: 0 0 260px;
     }
     
     .container {
@@ -834,8 +864,10 @@ footer {
     #tool-container {
         width: 240px;
         height: 240px;
+        flex: 0 0 240px;
     }
 }
+
 /* ===== Professional Experience Project Styles ===== */
 .professional-project {
     grid-column: 1 / -1;
@@ -857,6 +889,22 @@ footer {
     color: var(--primary-dark);
     font-size: 1.8rem;
     margin-bottom: 0.5rem;
+}
+
+.commercial-summary {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    margin-top: 1rem;
+    font-size: 0.95rem;
+    color: var(--secondary-blue);
+}
+
+.commercial-summary div {
+    background: var(--light-blue);
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    border-left: 3px solid var(--construction-gold);
 }
 
 .project-role {
@@ -1049,6 +1097,11 @@ footer {
         font-size: 1.5rem;
     }
     
+    .commercial-summary {
+        flex-direction: column;
+        gap: 0.8rem;
+    }
+    
     .detail-section h4 {
         font-size: 1.1rem;
     }
@@ -1072,6 +1125,7 @@ footer {
         padding: 1.2rem;
     }
 }
+
 .ats-keywords {
     position: absolute;
     left: -9999px;
@@ -1081,5 +1135,3 @@ footer {
     color: transparent;
     user-select: none;
 }
-
-
