@@ -615,6 +615,7 @@ header {
 }
 
 .contact-text h4 {
+    color: var(--construction-orange);
     margin-bottom: 0.3rem;
 }
 
@@ -1137,4 +1138,5 @@ footer {
     color: transparent;
     user-select: none;
 }
+
 
