@@ -187,47 +187,128 @@ header {
 .hero .container {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-start;
     height: 100%;
     min-height: 80vh;
     flex-wrap: wrap;
+    padding-top: 4rem;
 }
 
 .hero-content {
     flex: 1;
-    max-width: 600px;
+    max-width: 650px;
     z-index: 2;
     position: relative;
     min-width: 300px;
 }
 
-.hero h1 {
-    color: var(--accent-white);
-    font-size: 3.5rem;
-    margin-bottom: 1rem;
-    line-height: 1.2;
-}
-
-.hero .title {
-    color: var(--construction-gold);
-    font-size: 2rem;
+.name-section {
     margin-bottom: 1.5rem;
+}
+
+.name-section h1 {
+    color: var(--accent-white);
+    font-size: 3.2rem;
+    margin-bottom: 0.5rem;
+    line-height: 1.1;
+}
+
+.name-section .title {
+    color: var(--construction-gold);
+    font-size: 1.8rem;
     font-weight: 600;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
 }
 
-.hero p {
-    font-size: 1.3rem;
+/* Qualifications Section */
+.qualifications {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 1.5rem;
+    border-radius: 8px;
+    margin-bottom: 2rem;
+    border-left: 4px solid var(--construction-orange);
+}
+
+.qualification-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.8rem;
+    color: var(--accent-white);
+    font-size: 1.1rem;
+}
+
+.qualification-item i {
+    color: var(--construction-gold);
+    margin-right: 1rem;
+    font-size: 1.2rem;
+    width: 24px;
+    text-align: center;
+}
+
+.specialization {
+    color: var(--accent-white);
+    font-size: 1.1rem;
+    line-height: 1.6;
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Divider */
+.divider {
+    height: 2px;
+    background: linear-gradient(90deg, 
+        transparent, 
+        var(--construction-orange), 
+        transparent);
+    margin: 2rem 0;
+}
+
+/* E-commerce Construction Section */
+.ecommerce-section {
     margin-bottom: 2.5rem;
-    max-width: 700px;
-    opacity: 0.95;
-    line-height: 1.7;
 }
 
+.ecommerce-section h3 {
+    color: var(--accent-white);
+    font-size: 1.5rem;
+    margin-bottom: 1.2rem;
+    display: flex;
+    align-items: center;
+}
+
+.ecommerce-section h3 i {
+    color: var(--construction-orange);
+    margin-right: 0.8rem;
+    font-size: 1.3rem;
+}
+
+.ecommerce-details {
+    display: grid;
+    gap: 0.8rem;
+}
+
+.ecommerce-item {
+    display: flex;
+    align-items: flex-start;
+    color: var(--accent-white);
+    font-size: 1.05rem;
+}
+
+.ecommerce-item i {
+    color: var(--construction-gold);
+    margin-right: 0.8rem;
+    margin-top: 0.2rem;
+    font-size: 0.9rem;
+    flex-shrink: 0;
+}
+
+/* CTA Buttons */
 .cta-buttons {
     display: flex;
     flex-wrap: wrap;
     gap: 1.5rem;
+    margin-top: 2rem;
 }
 
 .btn {
@@ -267,8 +348,8 @@ header {
 
 /* ===== Burj Khalifa Animation Container ===== */
 #tool-container {
-    flex: 0 0 400px;
-    height: 400px;
+    flex: 0 0 420px;
+    height: 420px;
     z-index: 1;
     border-radius: 20px;
     overflow: hidden;
@@ -283,6 +364,7 @@ header {
     justify-content: center;
     margin-left: 2rem;
     position: relative;
+    margin-top: 1rem;
 }
 
 #tool-container canvas {
@@ -679,13 +761,14 @@ footer {
 @media (max-width: 1200px) {
     .hero .container {
         flex-direction: column;
+        align-items: center;
         text-align: center;
-        justify-content: center;
     }
     
     .hero-content {
         max-width: 800px;
-        margin-bottom: 3rem;
+        margin-bottom: 2rem;
+        text-align: left;
     }
     
     #tool-container {
@@ -696,12 +779,12 @@ footer {
         height: 350px;
     }
     
-    .hero h1 {
-        font-size: 3rem;
+    .name-section h1 {
+        font-size: 2.8rem;
     }
     
-    .hero .title {
-        font-size: 1.8rem;
+    .name-section .title {
+        font-size: 1.6rem;
     }
 }
 
@@ -711,33 +794,28 @@ footer {
         gap: 3rem;
     }
     
-    h1 {
-        font-size: 2.8rem;
-    }
-    
-    .hero h1 {
-        font-size: 2.8rem;
-    }
-    
     .hero-content {
         width: 100%;
-        text-align: center;
     }
     
-    .hero p {
-        margin-left: auto;
-        margin-right: auto;
+    .name-section h1 {
+        font-size: 2.5rem;
     }
     
-    #tool-container {
-        position: relative;
-        top: auto;
-        right: auto;
-        transform: none;
-        width: 400px;
-        height: 400px;
-        margin: 2rem auto;
-        display: block;
+    .qualification-item {
+        font-size: 1rem;
+    }
+    
+    .specialization {
+        font-size: 1rem;
+    }
+    
+    .ecommerce-section h3 {
+        font-size: 1.3rem;
+    }
+    
+    .ecommerce-item {
+        font-size: 1rem;
     }
 }
 
@@ -772,21 +850,34 @@ footer {
         display: block;
     }
 
-    .hero .title {
-        font-size: 1.5rem;
+    .hero .container {
+        text-align: center;
     }
-
-    .hero p {
-        font-size: 1.1rem;
+    
+    .hero-content {
+        text-align: center;
     }
-
-    .btn {
-        padding: 0.8rem 1.8rem;
+    
+    .qualification-item {
+        justify-content: center;
+    }
+    
+    .ecommerce-item {
+        justify-content: center;
+        text-align: left;
     }
     
     #tool-container {
-        width: 350px;
-        height: 350px;
+        width: 320px;
+        height: 320px;
+    }
+    
+    .cta-buttons {
+        justify-content: center;
+    }
+    
+    .btn {
+        padding: 0.8rem 1.8rem;
     }
 
     .contact-form {
@@ -803,8 +894,25 @@ footer {
         font-size: 1.8rem;
     }
     
-    .hero h1 {
-        font-size: 2.3rem;
+    .name-section h1 {
+        font-size: 2.2rem;
+    }
+    
+    .name-section .title {
+        font-size: 1.4rem;
+    }
+    
+    .qualifications {
+        padding: 1.2rem;
+    }
+    
+    .ecommerce-details {
+        grid-template-columns: 1fr;
+    }
+    
+    #tool-container {
+        width: 280px;
+        height: 280px;
     }
     
     .cta-buttons {
@@ -820,29 +928,24 @@ footer {
     .skills-grid, .projects-grid, .certifications-grid {
         grid-template-columns: 1fr;
     }
-    
-    #tool-container {
-        width: 300px;
-        height: 300px;
-    }
 }
 
 @media (max-width: 480px) {
-    #tool-container {
-        width: 280px;
-        height: 280px;
-    }
-    
-    .hero .title {
-        font-size: 1.3rem;
-    }
-    
-    .hero p {
-        font-size: 1rem;
-    }
-    
     .hero-content {
-        padding: 0 1rem;
+        padding: 0 0.5rem;
+    }
+    
+    .name-section h1 {
+        font-size: 2rem;
+    }
+    
+    .name-section .title {
+        font-size: 1.2rem;
+    }
+    
+    #tool-container {
+        width: 250px;
+        height: 250px;
     }
     
     .contact-form {
@@ -852,11 +955,23 @@ footer {
 
 @media (max-width: 380px) {
     #tool-container {
-        width: 250px;
-        height: 250px;
+        width: 220px;
+        height: 220px;
     }
     
-    .hero h1 {
-        font-size: 2rem;
+    .name-section h1 {
+        font-size: 1.8rem;
+    }
+    
+    .name-section .title {
+        font-size: 1.1rem;
+    }
+    
+    .qualification-item {
+        font-size: 0.9rem;
+    }
+    
+    .specialization {
+        font-size: 0.9rem;
     }
 }
