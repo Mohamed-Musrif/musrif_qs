@@ -444,7 +444,8 @@ function initBurjKhalifaAnimation() {
         padding: 8px;
         border-radius: 0 0 15px 15px;
     `;
-    animationLabel.innerHTML = '';
-    container.appendChild(animationLabel);
+   
+  
 }
+
 
