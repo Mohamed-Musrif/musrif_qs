@@ -1,799 +1,1445 @@
-// DOM Elements
-const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-const navLinks = document.getElementById('navLinks');
-const contactForm = document.getElementById('contactForm');
-const currentYear = document.getElementById('currentYear');
-
-//a Initialize when DOM is loaded
-document.addEventListener('DOMContentLoaded', function() {
-    initMobileMenu();
-    setCurrentYear();
-    setupFormValidation();
-    setupSmoothScrolling();
-    initBurjKhalifaAnimation();
-    setupAnimations();
-    initLogoEffects(); // Add this line
-});
-
-// Mobile Navigation Toggle
-function initMobileMenu() {
-    if (!mobileMenuBtn || !navLinks) return;
-    
-    mobileMenuBtn.addEventListener('click', () => {
-        navLinks.classList.toggle('active');
-        mobileMenuBtn.innerHTML = navLinks.classList.contains('active') 
-            ? '<i class="fas fa-times"></i>' 
-            : '<i class="fas fa-bars"></i>';
-    });
-    
-    // Close mobile menu when clicking a link
-    document.querySelectorAll('.nav-links a').forEach(link => {
-        link.addEventListener('click', () => {
-            navLinks.classList.remove('active');
-            mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
-        });
-    });
+/* ===== CSS Variables ===== */
+:root {
+    --primary-dark: #0d1b2a;
+    --primary-blue: #1b263b;
+    --secondary-blue: #415a77;
+    --accent-blue: #778da9;
+    --light-blue: #e0e1dd;
+    --construction-orange: #f97316;
+    --construction-gold: #d4af37;
+    --success-green: #10b981;
+    --text-light: #f8f9fa;
+    --text-dark: #212529;
+    --shadow: rgba(0, 0, 0, 0.1);
+    --transition: all 0.3s ease;
 }
 
-// Set current year in footer
-function setCurrentYear() {
-    if (currentYear) {
-        currentYear.textContent = new Date().getFullYear();
+/* ===== Base Styles ===== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Open Sans', sans-serif;
+    line-height: 1.6;
+    color: var(--text-dark);
+    background-color: var(--text-light);
+    overflow-x: hidden;
+}
+
+h1, h2, h3, h4 {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: var(--primary-dark);
+}
+
+h1 {
+    font-size: 2.5rem;
+    line-height: 1.2;
+}
+
+h2 {
+    font-size: 2rem;
+    position: relative;
+    display: inline-block;
+    margin-bottom: 2.5rem;
+}
+
+h2:after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 0;
+    width: 60px;
+    height: 4px;
+    background-color: var(--construction-orange);
+}
+
+p {
+    margin-bottom: 1rem;
+}
+
+.container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    
+    padding: 0 5rem;
+}
+
+section {
+    padding: 2.5rem 0;
+}
+
+.section-title {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.section-title h2:after {
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+/* ===== Navigation ===== */
+header {
+    background-color: rgba(13, 27, 42, 0.95);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    transition: var(--transition);
+}
+
+.nav-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.2rem 1.5rem;
+}
+
+/* ===== Professional QS Logo with Construction Elements ===== */
+.logo {
+    font-family: 'Montserrat', sans-serif;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    position: relative;
+}
+
+.logo .qs-container {
+    position: relative;
+    width: 50px;
+    height: 50px;
+}
+
+.logo .qs-badge {
+    background: linear-gradient(135deg, var(--construction-orange) 0%, #e55d00 100%);
+    color: var(--text-light);
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.6rem;
+    font-weight: 800;
+    position: relative;
+    z-index: 2;
+    box-shadow: 0 6px 15px rgba(249, 115, 22, 0.3);
+    border: 2px solid rgba(255, 255, 255, 0.15);
+    transition: var(--transition);
+    overflow: hidden;
+}
+
+.logo .qs-badge:before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(
+        to bottom right,
+        rgba(255, 255, 255, 0.1) 0%,
+        rgba(255, 255, 255, 0.05) 50%,
+        transparent 50%,
+        transparent 100%
+    );
+    transform: rotate(45deg);
+}
+
+.logo .qs-badge:after {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    right: 2px;
+    bottom: 2px;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    pointer-events: none;
+}
+
+/* Construction elements around QS badge */
+.logo .construction-ring {
+    position: absolute;
+    top: -5px;
+    left: -5px;
+    right: -5px;
+    bottom: -5px;
+    border: 2px solid var(--construction-gold);
+    border-radius: 12px;
+    opacity: 0.7;
+    z-index: 1;
+    animation: rotate-ring 20s linear infinite;
+}
+
+.logo .construction-ring:before,
+.logo .construction-ring:after {
+    content: '';
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background: var(--construction-gold);
+    border-radius: 50%;
+}
+
+.logo .construction-ring:before {
+    top: -5px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.logo .construction-ring:after {
+    bottom: -5px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+/* Ruler element */
+.logo .ruler-element {
+    position: absolute;
+    top: 50%;
+    right: -8px;
+    width: 25px;
+    height: 4px;
+    background: var(--construction-gold);
+    transform: translateY(-50%) rotate(45deg);
+    border-radius: 2px;
+    z-index: 3;
+    opacity: 0.8;
+}
+
+.logo .ruler-element:before,
+.logo .ruler-element:after {
+    content: '';
+    position: absolute;
+    width: 3px;
+    height: 10px;
+    background: var(--construction-gold);
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.logo .ruler-element:before {
+    left: 4px;
+}
+
+.logo .ruler-element:after {
+    right: 4px;
+}
+
+/* Hammer element */
+.logo .hammer-element {
+    position: absolute;
+    bottom: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 20px;
+    height: 4px;
+    background: var(--construction-orange);
+    border-radius: 2px;
+    z-index: 3;
+    opacity: 0.8;
+}
+
+.logo .hammer-element:before {
+    content: '';
+    position: absolute;
+    width: 8px;
+    height: 12px;
+    background: var(--construction-orange);
+    top: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-radius: 2px;
+}
+
+/* Text styling */
+.logo .logo-text {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.1;
+    padding-left: 0.5rem;
+}
+
+.logo .name {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--text-light);
+    letter-spacing: 0.8px;
+    white-space: nowrap;
+}
+
+.logo .title-container {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 0.2rem;
+}
+
+.logo .title-line {
+    width: 20px;
+    height: 2px;
+    background: var(--construction-orange);
+    border-radius: 1px;
+}
+
+.logo .title {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--construction-gold);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+/* Hover effects */
+.logo:hover .qs-badge {
+    transform: scale(1.05);
+    box-shadow: 0 8px 20px rgba(249, 115, 22, 0.4);
+}
+
+.logo:hover .construction-ring {
+    animation-duration: 10s;
+}
+
+.logo:hover .ruler-element,
+.logo:hover .hammer-element {
+    opacity: 1;
+}
+
+/* Animations */
+@keyframes rotate-ring {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
     }
 }
 
-// Form submission handler
-function setupFormValidation() {
-    if (!contactForm) return;
+/* ===== Mobile Responsive Adjustments ===== */
+@media (max-width: 992px) {
+    .logo .name {
+        font-size: 1.2rem;
+        letter-spacing: 0.6px;
+    }
     
-    contactForm.addEventListener('submit', function(e) {
-        e.preventDefault();
-        
-        // Get form values
-        const name = this.querySelector('input[type="text"]').value.trim();
-        const email = this.querySelector('input[type="email"]').value.trim();
-        const subject = this.querySelectorAll('input[type="text"]')[1].value.trim();
-        const message = this.querySelector('textarea').value.trim();
-        
-        if (!name || !email || !subject || !message) {
-            alert('Please fill in all required fields.');
-            return;
-        }
-        
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailRegex.test(email)) {
-            alert('Please enter a valid email address.');
-            return;
-        }
-        
-        const submitBtn = this.querySelector('button[type="submit"]');
-        const originalText = submitBtn.textContent;
-        
-        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
-        submitBtn.disabled = true;
-        
-        setTimeout(() => {
-            alert('Thank you for your message! I will get back to you soon.');
-            this.reset();
-            submitBtn.textContent = originalText;
-            submitBtn.disabled = false;
-        }, 1500);
-    });
-}
-// Add interactive effects to logo
-function initLogoEffects() {
-    const logo = document.querySelector('.logo');
-    if (!logo) return;
+    .logo .title {
+        font-size: 0.75rem;
+        letter-spacing: 1.2px;
+    }
     
-    // Pause/play ring animation on hover
-    logo.addEventListener('mouseenter', function() {
-        const ring = this.querySelector('.construction-ring');
-        if (ring) {
-            ring.style.animationPlayState = 'running';
-        }
-    });
+    .logo .qs-container {
+        width: 45px;
+        height: 45px;
+    }
     
-    logo.addEventListener('mouseleave', function() {
-        const ring = this.querySelector('.construction-ring');
-        if (ring) {
-            ring.style.animationPlayState = 'paused';
-        }
-    });
-    
-    // Add click effect
-    logo.addEventListener('click', function(e) {
-        e.preventDefault();
-        
-        // Ripple effect on QS badge
-        const qsBadge = this.querySelector('.qs-badge');
-        if (qsBadge) {
-            qsBadge.style.transform = 'scale(0.95)';
-            setTimeout(() => {
-                qsBadge.style.transform = 'scale(1)';
-            }, 150);
-        }
-        
-        // Smooth scroll to top
-        window.scrollTo({
-            top: 0,
-            behavior: 'smooth'
-        });
-    });
+    .logo .qs-badge {
+        font-size: 1.4rem;
+    }
 }
 
-// Smooth scrolling for anchor links
-function setupSmoothScrolling() {
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function(e) {
-            e.preventDefault();
-            
-            const targetId = this.getAttribute('href');
-            if (targetId === '#') return;
-            
-            const targetElement = document.querySelector(targetId);
-            if (targetElement) {
-                window.scrollTo({
-                    top: targetElement.offsetTop - 80,
-                    behavior: 'smooth'
-                });
-            }
-        });
-    });
+@media (max-width: 768px) {
+    .logo .name {
+        font-size: 1.1rem;
+    }
+    
+    .logo .title {
+        font-size: 0.7rem;
+        letter-spacing: 1px;
+    }
+    
+    .logo .title-container {
+        gap: 0.3rem;
+    }
+    
+    .logo .qs-container {
+        width: 40px;
+        height: 40px;
+    }
+    
+    .logo .qs-badge {
+        font-size: 1.2rem;
+        border-radius: 8px;
+    }
+    
+    .logo .construction-ring {
+        top: -4px;
+        left: -4px;
+        right: -4px;
+        bottom: -4px;
+        border-width: 1.5px;
+    }
+    
+    .logo .ruler-element {
+        width: 20px;
+        height: 3px;
+        right: -6px;
+    }
+    
+    .logo .hammer-element {
+        width: 16px;
+        height: 3px;
+        bottom: -6px;
+    }
 }
 
-// Setup animations
-function setupAnimations() {
-    document.body.classList.add('page-transition');
+@media (max-width: 576px) {
+    .logo .logo-text {
+        display: none;
+    }
     
-    const skillCards = document.querySelectorAll('.skill-card');
-    skillCards.forEach((card, index) => {
-        card.style.animationDelay = `${index * 0.1}s`;
-        card.classList.add('fade-in');
-    });
+    .logo .qs-container {
+        width: 45px;
+        height: 45px;
+    }
     
-    const projectCards = document.querySelectorAll('.project-card');
-    projectCards.forEach((card, index) => {
-        card.style.animationDelay = `${index * 0.15}s`;
-        card.classList.add('fade-in');
-    });
+    .logo .qs-badge {
+        font-size: 1.3rem;
+    }
+    
+    .logo {
+        gap: 0;
+    }
 }
 
-// Advanced Burj Khalifa Construction Animation
-function initBurjKhalifaAnimation() {
-    const container = document.getElementById('tool-container');
-    if (!container) return;
-    
-    if (typeof THREE === 'undefined') {
-        console.error('Three.js is not loaded.');
-        return;
+@media (max-width: 380px) {
+    .logo .qs-container {
+        width: 40px;
+        height: 40px;
     }
     
-    // Add stage indicator overlay
-    const overlay = document.createElement('div');
-    overlay.className = 'construction-overlay';
-    overlay.innerHTML = '<div class="stage-indicator">Construction Stage: <span id="stage-text">Foundation</span></div>';
-    container.appendChild(overlay);
-    const stageText = document.getElementById('stage-text');
-    
-    // Scene setup
-    const scene = new THREE.Scene();
-    scene.fog = new THREE.Fog(0x0d1b2a, 100, 300);
-    
-    // Enhanced camera setup
-    const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 2000);
-    camera.position.set(40, 30, 40);
-    
-    // Enhanced renderer with better quality
-    const renderer = new THREE.WebGLRenderer({ 
-        antialias: true,
-        alpha: true,
-        powerPreference: "high-performance"
-    });
-    renderer.setSize(container.clientWidth, container.clientHeight);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-    renderer.shadowMap.enabled = true;
-    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-    container.appendChild(renderer.domElement);
-    
-    // Enhanced lighting setup
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.3);
-    scene.add(ambientLight);
-    
-    const sunLight = new THREE.DirectionalLight(0xfff4e6, 1.5);
-    sunLight.position.set(100, 200, 100);
-    sunLight.castShadow = true;
-    sunLight.shadow.camera.left = -100;
-    sunLight.shadow.camera.right = 100;
-    sunLight.shadow.camera.top = 100;
-    sunLight.shadow.camera.bottom = -100;
-    sunLight.shadow.mapSize.width = 2048;
-    sunLight.shadow.mapSize.height = 2048;
-    scene.add(sunLight);
-    
-    // Create Dubai skyline background
-    createSkyline(scene);
-    
-    // Create desert ground
-    const groundGeometry = new THREE.PlaneGeometry(500, 500);
-    const groundMaterial = new THREE.MeshStandardMaterial({ 
-        color: 0xd4a574,
-        roughness: 0.9,
-        metalness: 0.1
-    });
-    const ground = new THREE.Mesh(groundGeometry, groundMaterial);
-    ground.rotation.x = -Math.PI / 2;
-    ground.receiveShadow = true;
-    scene.add(ground);
-    
-    // Construction site foundation
-    const foundation = createFoundation();
-    scene.add(foundation);
-    
-    // Create multiple tower cranes
-    const cranes = createConstructionCranes(scene);
-    
-    // Create construction materials piles
-    createMaterialPiles(scene);
-    
-    // Burj Khalifa structure components
-    const structure = {
-        base: null,
-        core: null,
-        tiers: [],
-        spire: null,
-        facade: null
-    };
-    
-    // Initialize structure
-    initializeStructure(structure);
-    
-    // Add construction site vehicles
-    createConstructionVehicles(scene);
-    
-    // Animation variables
-    let animationTime = 0;
-    const totalCycleTime = 60; // Longer cycle for more detailed stages
-    let currentStage = 0;
-    const stages = ['Foundation', 'Core Structure', 'Superstructure', 'Facade Installation', 'Finishing Works'];
-    
-    // Construction progress parameters
-    const constructionProgress = {
-        foundation: 0,
-        core: 0,
-        superstructure: 0,
-        facade: 0,
-        spire: 0
-    };
-    
-    // Handle window resize
-    window.addEventListener('resize', function() {
-        if (!container || !camera || !renderer) return;
-        
-        const width = container.clientWidth;
-        const height = container.clientHeight;
-        
-        camera.aspect = width / height;
-        camera.updateProjectionMatrix();
-        renderer.setSize(width, height);
-    });
-    
-    // Animation loop
-    function animate() {
-        requestAnimationFrame(animate);
-        
-        animationTime += 0.016;
-        const cycleTime = animationTime % totalCycleTime;
-        
-        // Update construction stage based on time
-        updateConstructionStage(cycleTime);
-        
-        // Update stage text
-        updateStageIndicator(cycleTime);
-        
-        // Animate construction progress
-        updateConstructionProgress(cycleTime);
-        
-        // Update 3D models based on progress
-        updateStructure(structure, constructionProgress);
-        
-        // Animate cranes
-        animateCranes(cranes, animationTime);
-        
-        // Smooth camera movement
-        updateCamera(camera, animationTime, constructionProgress);
-        
-        renderer.render(scene, camera);
+    .logo .qs-badge {
+        font-size: 1.2rem;
     }
-    
-    // Construction stage management
-    function updateConstructionStage(cycleTime) {
-        const stageDuration = totalCycleTime / stages.length;
-        currentStage = Math.floor(cycleTime / stageDuration);
-        
-        // Gradually progress through construction phases
-        const stageProgress = (cycleTime % stageDuration) / stageDuration;
-        
-        switch(currentStage) {
-            case 0: // Foundation
-                constructionProgress.foundation = Math.min(stageProgress * 2, 1);
-                break;
-            case 1: // Core Structure
-                constructionProgress.foundation = 1;
-                constructionProgress.core = Math.min(stageProgress * 1.5, 1);
-                break;
-            case 2: // Superstructure
-                constructionProgress.core = 1;
-                constructionProgress.superstructure = stageProgress;
-                break;
-            case 3: // Facade Installation
-                constructionProgress.superstructure = 1;
-                constructionProgress.facade = stageProgress;
-                break;
-            case 4: // Finishing Works
-                constructionProgress.facade = 1;
-                constructionProgress.spire = stageProgress;
-                break;
-        }
-    }
-    
-    function updateStageIndicator(cycleTime) {
-        if (stageText) {
-            stageText.textContent = stages[currentStage];
-            // Add progress percentage
-            const stageDuration = totalCycleTime / stages.length;
-            const stageProgress = (cycleTime % stageDuration) / stageDuration;
-            stageText.textContent = `${stages[currentStage]} (${Math.round(stageProgress * 100)}%)`;
-        }
-    }
-    
-    function updateStructure(structure, progress) {
-        // Update foundation visibility
-        if (structure.base) {
-            structure.base.visible = progress.foundation > 0;
-            structure.base.scale.y = progress.foundation;
-        }
-        
-        // Update core structure
-        if (structure.core) {
-            structure.core.visible = progress.core > 0;
-            structure.core.scale.y = progress.core;
-            
-            // Add construction grid effect
-            const gridOpacity = progress.core > 0.8 ? (1 - progress.core) * 5 : 1;
-            structure.core.children.forEach(child => {
-                if (child.material) {
-                    child.material.opacity = gridOpacity;
-                }
-            });
-        }
-        
-        // Update superstructure tiers
-        structure.tiers.forEach((tier, index) => {
-            const tierProgress = Math.max(0, (progress.superstructure * structure.tiers.length - index) / 3);
-            tier.visible = tierProgress > 0;
-            tier.scale.y = tierProgress;
-            
-            // Add material transition effect
-            if (tierProgress > 0.7 && tierProgress < 1) {
-                tier.material.opacity = (tierProgress - 0.7) * 3.33;
-            }
-        });
-        
-        // Update facade
-        if (structure.facade) {
-            structure.facade.visible = progress.facade > 0;
-            structure.facade.material.opacity = progress.facade;
-            
-            // Add glass reflection animation
-            structure.facade.material.emissiveIntensity = 0.1 + Math.sin(animationTime) * 0.05;
-        }
-        
-        // Update spire
-        if (structure.spire) {
-            structure.spire.visible = progress.spire > 0;
-            structure.spire.scale.y = progress.spire;
-            
-            // Add golden glow effect
-            structure.spire.material.emissiveIntensity = 0.5 + Math.sin(animationTime * 2) * 0.3;
-        }
-    }
-    
-    // Helper functions
-    function createFoundation() {
-        const foundationGroup = new THREE.Group();
-        
-        // Concrete foundation
-        const foundationGeo = new THREE.CylinderGeometry(25, 25, 3, 32);
-        const foundationMat = new THREE.MeshStandardMaterial({
-            color: 0x8a7f8a,
-            roughness: 0.9,
-            metalness: 0.1
-        });
-        const foundationMesh = new THREE.Mesh(foundationGeo, foundationMat);
-        foundationMesh.position.y = 1.5;
-        foundationMesh.castShadow = true;
-        foundationMesh.receiveShadow = true;
-        foundationGroup.add(foundationMesh);
-        
-        // Reinforcement bars
-        const rebarGeo = new THREE.CylinderGeometry(0.3, 0.3, 2, 8);
-        const rebarMat = new THREE.MeshStandardMaterial({
-            color: 0x7a7a7a,
-            roughness: 0.3,
-            metalness: 0.7
-        });
-        
-        for (let i = 0; i < 24; i++) {
-            const angle = (i / 24) * Math.PI * 2;
-            const radius = 20;
-            const rebar = new THREE.Mesh(rebarGeo, rebarMat);
-            rebar.position.set(
-                Math.cos(angle) * radius,
-                2,
-                Math.sin(angle) * radius
-            );
-            foundationGroup.add(rebar);
-        }
-        
-        return foundationGroup;
-    }
-    
-    function createConstructionCranes(scene) {
-        const cranes = [];
-        const craneCount = 4;
-        
-        for (let i = 0; i < craneCount; i++) {
-            const craneGroup = new THREE.Group();
-            
-            // Crane base
-            const baseGeo = new THREE.CylinderGeometry(1.5, 2, 4, 16);
-            const baseMat = new THREE.MeshStandardMaterial({
-                color: 0x4a5568,
-                roughness: 0.8
-            });
-            const base = new THREE.Mesh(baseGeo, baseMat);
-            base.castShadow = true;
-            craneGroup.add(base);
-            
-            // Crane mast
-            const mastGeo = new THREE.BoxGeometry(1, 80, 1);
-            const mastMat = new THREE.MeshStandardMaterial({
-                color: 0x2d3748,
-                roughness: 0.7
-            });
-            const mast = new THREE.Mesh(mastGeo, mastMat);
-            mast.position.y = 40;
-            mast.castShadow = true;
-            craneGroup.add(mast);
-            
-            // Crane jib
-            const jibLength = 25 + Math.random() * 10;
-            const jibGeo = new THREE.BoxGeometry(jibLength, 0.5, 0.5);
-            const jibMat = new THREE.MeshStandardMaterial({
-                color: 0xf97316,
-                roughness: 0.4,
-                metalness: 0.6
-            });
-            const jib = new THREE.Mesh(jibGeo, jibMat);
-            jib.position.set(jibLength/2 - 5, 78, 0);
-            jib.castShadow = true;
-            craneGroup.add(jib);
-            
-            // Counterweight
-            const counterGeo = new THREE.BoxGeometry(3, 2, 2);
-            const counterMat = new THREE.MeshStandardMaterial({
-                color: 0x718096,
-                roughness: 0.9
-            });
-            const counterweight = new THREE.Mesh(counterGeo, counterMat);
-            counterweight.position.set(-5, 78, 0);
-            craneGroup.add(counterweight);
-            
-            // Hook
-            const hookGeo = new THREE.SphereGeometry(0.5, 8, 8);
-            const hookMat = new THREE.MeshStandardMaterial({
-                color: 0xd4af37,
-                roughness: 0.3,
-                metalness: 0.8
-            });
-            const hook = new THREE.Mesh(hookGeo, hookMat);
-            hook.position.set(jibLength/2 - 5, 60, 0);
-            craneGroup.add(hook);
-            
-            // Position cranes around the site
-            const angle = (i / craneCount) * Math.PI * 2;
-            const radius = 35;
-            craneGroup.position.set(
-                Math.cos(angle) * radius,
-                0,
-                Math.sin(angle) * radius
-            );
-            
-            craneGroup.userData = {
-                baseAngle: angle,
-                jibLength: jibLength,
-                rotationSpeed: 0.5 + Math.random() * 0.5,
-                hookSpeed: 1 + Math.random() * 0.5
-            };
-            
-            cranes.push(craneGroup);
-            scene.add(craneGroup);
-        }
-        
-        return cranes;
-    }
-    
-    function animateCranes(cranes, time) {
-        cranes.forEach((crane, index) => {
-            const data = crane.userData;
-            
-            // Rotate jib
-            const jib = crane.children[2];
-            jib.rotation.y = Math.sin(time * data.rotationSpeed + index) * 0.8;
-            
-            // Move hook up and down
-            const hook = crane.children[4];
-            hook.position.y = 60 + Math.sin(time * data.hookSpeed + index) * 15;
-            
-            // Move hook along jib
-            hook.position.x = (data.jibLength/2 - 5) * Math.cos(jib.rotation.y);
-            hook.position.z = (data.jibLength/2 - 5) * Math.sin(jib.rotation.y);
-        });
-    }
-    
-    function createMaterialPiles(scene) {
-        // Concrete pile
-        const concretePile = new THREE.Mesh(
-            new THREE.BoxGeometry(8, 4, 8),
-            new THREE.MeshStandardMaterial({
-                color: 0x9e9e9e,
-                roughness: 0.9
-            })
-        );
-        concretePile.position.set(-30, 2, -25);
-        concretePile.castShadow = true;
-        scene.add(concretePile);
-        
-        // Steel pile
-        const steelGroup = new THREE.Group();
-        for (let i = 0; i < 20; i++) {
-            const steel = new THREE.Mesh(
-                new THREE.CylinderGeometry(0.3, 0.3, 6 + Math.random() * 4, 8),
-                new THREE.MeshStandardMaterial({
-                    color: 0x7a7a7a,
-                    roughness: 0.3,
-                    metalness: 0.8
-                })
-            );
-            steel.position.set(
-                25 + (i % 5) * 1.5,
-                3 + Math.floor(i / 5) * 1.5,
-                20 + Math.floor(i / 5) * 1.5
-            );
-            steel.castShadow = true;
-            steelGroup.add(steel);
-        }
-        scene.add(steelGroup);
-    }
-    
-    function initializeStructure(structure) {
-        // Create base structure
-        structure.base = new THREE.Mesh(
-            new THREE.CylinderGeometry(20, 20, 10, 32),
-            new THREE.MeshStandardMaterial({
-                color: 0x5d6d7e,
-                roughness: 0.8
-            })
-        );
-        structure.base.position.y = 5;
-        structure.base.castShadow = true;
-        structure.base.receiveShadow = true;
-        scene.add(structure.base);
-        
-        // Create core structure
-        structure.core = new THREE.Group();
-        const coreGeo = new THREE.CylinderGeometry(8, 10, 100, 16);
-        const coreMat = new THREE.MeshStandardMaterial({
-            color: 0x4a5568,
-            roughness: 0.7,
-            transparent: true,
-            opacity: 0.8
-        });
-        const coreMesh = new THREE.Mesh(coreGeo, coreMat);
-        coreMesh.castShadow = true;
-        coreMesh.receiveShadow = true;
-        structure.core.add(coreMesh);
-        
-        // Add construction grid to core
-        const edges = new THREE.EdgesGeometry(coreGeo);
-        const line = new THREE.LineSegments(edges, new THREE.LineBasicMaterial({ 
-            color: 0xf97316,
-            linewidth: 2
-        }));
-        structure.core.add(line);
-        structure.core.position.y = 55;
-        scene.add(structure.core);
-        
-        // Create tiered structure
-        const tiers = [
-            { height: 40, radius: 18 },
-            { height: 35, radius: 16 },
-            { height: 30, radius: 14 },
-            { height: 25, radius: 12 },
-            { height: 20, radius: 10 },
-            { height: 15, radius: 8 },
-            { height: 10, radius: 6 }
-        ];
-        
-        tiers.forEach((tier, index) => {
-            const tierGeo = new THREE.CylinderGeometry(
-                tier.radius * 0.9,
-                tier.radius,
-                tier.height,
-                24
-            );
-            const tierMat = new THREE.MeshStandardMaterial({
-                color: index % 2 === 0 ? 0x5d6d7e : 0x6d7e8f,
-                roughness: 0.6,
-                metalness: 0.2,
-                transparent: true,
-                opacity: 0
-            });
-            const tierMesh = new THREE.Mesh(tierGeo, tierMat);
-            tierMesh.castShadow = true;
-            tierMesh.receiveShadow = true;
-            tierMesh.position.y = 105 + index * 30;
-            scene.add(tierMesh);
-            structure.tiers.push(tierMesh);
-        });
-        
-        // Create facade
-        structure.facade = new THREE.Mesh(
-            new THREE.CylinderGeometry(6, 6, 250, 32),
-            new THREE.MeshPhysicalMaterial({
-                color: 0xa0c8e0,
-                roughness: 0.1,
-                metalness: 0.9,
-                transparent: true,
-                opacity: 0,
-                transmission: 0.9,
-                thickness: 1
-            })
-        );
-        structure.facade.position.y = 125;
-        scene.add(structure.facade);
-        
-        // Create spire
-        structure.spire = new THREE.Mesh(
-            new THREE.CylinderGeometry(1, 3, 60, 16),
-            new THREE.MeshStandardMaterial({
-                color: 0xd4af37,
-                emissive: 0xd4af37,
-                emissiveIntensity: 0.5,
-                roughness: 0.3,
-                metalness: 0.9
-            })
-        );
-        structure.spire.position.y = 350;
-        scene.add(structure.spire);
-    }
-    
-    function createSkyline(scene) {
-        // Create distant buildings
-        for (let i = 0; i < 15; i++) {
-            const height = 30 + Math.random() * 70;
-            const width = 20 + Math.random() * 30;
-            const depth = 20 + Math.random() * 30;
-            const distance = 200 + Math.random() * 100;
-            const angle = Math.random() * Math.PI * 2;
-            
-            const building = new THREE.Mesh(
-                new THREE.BoxGeometry(width, height, depth),
-                new THREE.MeshStandardMaterial({
-                    color: 0x4a5a6a,
-                    roughness: 0.8
-                })
-            );
-            
-            building.position.set(
-                Math.cos(angle) * distance,
-                height / 2,
-                Math.sin(angle) * distance
-            );
-            
-            scene.add(building);
-        }
-    }
-    
-    function createConstructionVehicles(scene) {
-        // Create cement mixer
-        const mixerGroup = new THREE.Group();
-        
-        // Mixer body
-        const mixerBody = new THREE.Mesh(
-            new THREE.CylinderGeometry(2, 2, 6, 16),
-            new THREE.MeshStandardMaterial({
-                color: 0xf97316,
-                roughness: 0.7
-            })
-        );
-        mixerBody.rotation.z = Math.PI / 2;
-        mixerBody.position.set(-15, 2, 20);
-        mixerGroup.add(mixerBody);
-        
-        // Mixer chassis
-        const chassis = new THREE.Mesh(
-            new THREE.BoxGeometry(8, 1, 3),
-            new THREE.MeshStandardMaterial({
-                color: 0x2d3748,
-                roughness: 0.8
-            })
-        );
-        chassis.position.set(-15, 0.5, 20);
-        mixerGroup.add(chassis);
-        
-        scene.add(mixerGroup);
-        
-        // Create dump truck
-        const truckGroup = new THREE.Group();
-        
-        // Truck body
-        const truckBody = new THREE.Mesh(
-            new THREE.BoxGeometry(10, 3, 5),
-            new THREE.MeshStandardMaterial({
-                color: 0x4a5568,
-                roughness: 0.8
-            })
-        );
-        truckBody.position.set(20, 1.5, -25);
-        truckGroup.add(truckBody);
-        
-        // Truck cabin
-        const cabin = new THREE.Mesh(
-            new THREE.BoxGeometry(4, 3, 4),
-            new THREE.MeshStandardMaterial({
-                color: 0x2d3748,
-                roughness: 0.7
-            })
-        );
-        cabin.position.set(25, 2, -25);
-        truckGroup.add(cabin);
-        
-        scene.add(truckGroup);
-    }
-    
-    function updateCamera(camera, time, progress) {
-        // Calculate overall construction progress
-        const overallProgress = (
-            progress.foundation * 0.1 +
-            progress.core * 0.2 +
-            progress.superstructure * 0.3 +
-            progress.facade * 0.3 +
-            progress.spire * 0.1
-        );
-        
-        // Dynamic camera based on construction progress
-        const baseRadius = 60 + overallProgress * 40;
-        const baseHeight = 30 + overallProgress * 50;
-        const orbitSpeed = 0.1 + overallProgress * 0.1;
-        
-        camera.position.x = baseRadius * Math.cos(time * orbitSpeed);
-        camera.position.z = baseRadius * Math.sin(time * orbitSpeed);
-        camera.position.y = baseHeight;
-        
-        // Look at the construction site with slight offset
-        const lookAtHeight = 20 + overallProgress * 100;
-        camera.lookAt(0, lookAtHeight, 0);
-    }
-    
-    function updateConstructionProgress(cycleTime) {
-        // This function updates construction progress based on time
-        // The actual updates are done in updateConstructionStage
-        // This is a placeholder for any additional progress calculations
-    }
-    
-    // Start animation
-    animate();
 }
 
+.nav-links {
+    display: flex;
+    list-style: none;
+}
+
+.nav-links li {
+    margin-left: 2rem;
+}
+
+.nav-links a {
+    color: var(--text-light);
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 1rem;
+    transition: var(--transition);
+    padding: 0.5rem 0;
+    position: relative;
+}
+
+.nav-links a:hover {
+    color: var(--construction-orange);
+}
+
+.nav-links a:after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: var(--construction-orange);
+    transition: width 0.3s ease;
+}
+
+.nav-links a:hover:after {
+    width: 100%;
+}
+
+.mobile-menu-btn {
+    display: none;
+    background: none;
+    border: none;
+    color: var(--text-light);
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+/* ===== Hero Section ===== */
+.hero {
+    background: linear-gradient(rgba(13, 27, 42, 0.85), rgba(13, 27, 42, 0.9)), url('https://images.unsplash.com/photo-1504307651254-35680f356dfd?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80');
+    background-size: cover;
+    background-position: center;
+    color: var(--text-light);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    position: relative;
+    padding-top: 80px;
+}
+
+.hero .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 2rem;
+    padding-right: -40px; /* Added right padding */
+}
+
+.hero-content {
+    flex: 1;
+    min-width: 300px;
+    max-width: 600px;
+    padding-right: 20px; /* Added right padding */
+}
+
+.hero h1 {
+    color: var(--text-light);
+    font-size: 3rem;
+    margin-bottom: 0.5rem;
+}
+
+.hero .title {
+    color: var(--construction-gold);
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+    font-weight: 600;
+}
+
+.qualifications {
+    margin: 1.5rem 0;
+}
+
+.qual-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.8rem;
+    font-size: 1.1rem;
+}
+
+.qual-item i {
+    color: var(--construction-gold);
+    margin-right: 1rem;
+    font-size: 1.2rem;
+}
+
+.specialization {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    margin: 1.5rem 0;
+}
+
+.ecommerce-section {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 1.5rem;
+    border-radius: 8px;
+    margin: 2rem 0;
+    border-left: 4px solid var(--construction-orange);
+}
+
+.ecommerce-section h3 {
+    color: var(--construction-gold);
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+}
+
+.ecommerce-section h3 i {
+    margin-right: 0.8rem;
+}
+
+.ecommerce-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+}
+
+.ecommerce-item {
+    display: flex;
+    align-items: center;
+    font-size: 1rem;
+}
+
+.ecommerce-item i {
+    color: var(--success-green);
+    margin-right: 0.8rem;
+    font-size: 0.9rem;
+}
+
+.cta-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    margin-top: 2rem;
+}
+
+.btn {
+    display: inline-block;
+    padding: 1rem 2.5rem;
+    background-color: var(--construction-orange);
+    color: white;
+    text-decoration: none;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 1.1rem;
+    transition: var(--transition);
+    border: 2px solid var(--construction-orange);
+    cursor: pointer;
+    text-align: center;
+}
+
+.btn:hover {
+    background-color: transparent;
+    color: var(--construction-orange);
+    transform: translateY(-3px);
+}
+
+.btn-outline {
+    background-color: transparent;
+    color: var(--text-light);
+    border-color: var(--text-light);
+}
+
+.btn-outline:hover {
+    background-color: var(--text-light);
+    color: var(--primary-dark);
+}
+
+.download-btn {
+    padding: 0.8rem 1.5rem;
+    font-size: 1rem;
+    margin-top: 0.5rem;
+}
+
+/* ===== 3D Animation Container - UPDATED ===== */
+#tool-container {
+    flex: 0 0 500px; /* Increased from 380px */
+    width: 100px; /* Increased from 380px */
+    height: 600px; /* Increased from 380px */
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.7);
+    border: 4px solid var(--construction-gold);
+    background: linear-gradient(135deg, rgba(13, 27, 42, 0.9) 0%, rgba(27, 38, 59, 0.8) 100%);
+    position: relative;
+    margin-right: -100px;
+    margin-bottom: 40px;
+}
+
+
+#tool-container canvas {
+    width: 100% !important;
+    height: 100% !important;
+    display: block;
+}
+
+/* Add overlay text for construction stages */
+.construction-overlay {
+    position: absolute;
+    top: 20px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    z-index: 100;
+    pointer-events: none;
+}
+
+.stage-indicator {
+    display: inline-block;
+    background: rgba(13, 27, 42, 0.85);
+    color: var(--construction-gold);
+    padding: 8px 20px;
+    border-radius: 25px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    font-size: 1.1rem;
+    border: 2px solid var(--construction-gold);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(5px);
+}
+
+/* Hide the animation label */
+#tool-container div[style*="Burj Khalifa"] {
+    display: none;
+}
+
+/* ===== About Section ===== */
+.about {
+    background-color: var(--light-blue);
+}
+
+.about-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+}
+
+.about-text h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.highlight-box {
+    background-color: white;
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px var(--shadow);
+    margin-top: 1.5rem;
+    border-left: 4px solid var(--construction-orange);
+}
+
+.about-education h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.education-item {
+    background-color: white;
+    padding: 1.5rem;
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 5px 15px var(--shadow);
+}
+
+.education-item h4 {
+    color: var(--construction-orange);
+    margin-bottom: 0.5rem;
+}
+
+/* ===== Skills Section ===== */
+.skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+.skill-card {
+    background-color: white;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px var(--shadow);
+    transition: var(--transition);
+    text-align: center;
+}
+
+.skill-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+.skill-icon {
+    font-size: 2.5rem;
+    color: var(--construction-orange);
+    margin-bottom: 1.5rem;
+}
+
+.skill-card h3 {
+    margin-bottom: 1rem;
+}
+
+.software-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.8rem;
+    margin-top: 1.5rem;
+}
+
+.software-badge {
+    background-color: var(--light-blue);
+    color: var(--primary-dark);
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    transition: var(--transition);
+}
+
+.software-badge:hover {
+    background-color: var(--construction-orange);
+    color: white;
+}
+
+/* ===== Projects Section ===== */
+.projects {
+    background-color: var(--light-blue);
+}
+
+.projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 2.5rem;
+}
+
+.project-card {
+    background-color: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px var(--shadow);
+    transition: var(--transition);
+}
+
+.project-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+.project-img {
+    height: 200px;
+    background-color: var(--secondary-blue);
+    position: relative;
+}
+
+.project-content {
+    padding: 1.5rem;
+}
+
+.project-content h3 {
+    margin-bottom: 0.8rem;
+}
+
+.project-role {
+    color: var(--construction-orange);
+    font-weight: 600;
+    margin-bottom: 1rem;
+    display: block;
+}
+
+.responsibilities {
+    list-style-type: none;
+    margin-top: 1rem;
+}
+
+.responsibilities li {
+    margin-bottom: 0.5rem;
+    padding-left: 1.5rem;
+    position: relative;
+}
+
+.responsibilities li:before {
+    content: '▸';
+    position: absolute;
+    left: 0;
+    color: var(--construction-orange);
+}
+
+/* ===== Certifications Section ===== */
+.certifications-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 2rem;
+}
+
+.cert-card {
+    background-color: white;
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px var(--shadow);
+    transition: var(--transition);
+    border-top: 3px solid var(--construction-gold);
+}
+
+.cert-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+.cert-card h3 {
+    font-size: 1.2rem;
+    margin-bottom: 0.8rem;
+}
+
+.cert-provider {
+    color: var(--construction-orange);
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.cert-date {
+    color: var(--accent-blue);
+    font-size: 0.9rem;
+}
+
+/* ===== Contact Section ===== */
+.contact {
+    background-color: var(--primary-dark);
+    color: var(--text-light);
+}
+
+.contact h2, .contact h3 {
+    color: var(--text-light);
+}
+
+.contact h2:after {
+    background-color: var(--construction-gold);
+}
+
+.contact-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+}
+
+.contact-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.contact-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.2rem;
+    
+}
+
+.contact-icon {
+    background-color: rgba(255, 255, 255, 0.1);
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3rem;
+    color: var(--construction-gold);
+    flex-shrink: 0;
+}
+
+.contact-text h4 {
+    color: var(--construction-orange);
+    margin-bottom: 0.3rem;
+}
+
+.contact-text a {
+    color: var(--text-light);
+    text-decoration: none;
+    transition: var(--transition);
+}
+
+.contact-text a:hover {
+    color: var(--construction-gold);
+}
+
+.social-links {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.social-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 45px;
+    height: 45px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    color: var(--text-light);
+    font-size: 1.2rem;
+    transition: var(--transition);
+}
+
+.social-link:hover {
+    background-color: var(--construction-orange);
+    transform: translateY(-3px);
+}
+
+.contact-form {
+    background-color: rgba(255, 255, 255, 0.05);
+    padding: 2rem;
+    border-radius: 8px;
+}
+
+.contact-form h3 {
+    margin-bottom: 1.5rem;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 1rem;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    background-color: rgba(255, 255, 255, 0.05);
+    border-radius: 4px;
+    color: var(--text-light);
+    font-family: 'Open Sans', sans-serif;
+    font-size: 1rem;
+}
+
+.form-group textarea {
+    min-height: 150px;
+    resize: vertical;
+}
+
+.contact-form .btn {
+    width: 100%;
+}
+
+/* ===== Footer ===== */
+footer {
+    background-color: var(--primary-blue);
+    color: var(--text-light);
+    text-align: center;
+    padding: 2rem 0;
+    font-size: 0.9rem;
+}
+
+/* ===== Animations ===== */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fade-in {
+    animation: fadeIn 1s ease-out;
+}
+
+/* ===== Responsive Design ===== */
+@media (max-width: 1200px) {
+    .hero .container {
+        flex-direction: column;
+        text-align: center;
+        padding-right: 1.5rem; /* Reset padding for mobile */
+    }
+    
+    .hero-content {
+        max-width: 800px;
+        padding-right: 0; /* Reset padding for mobile */
+    }
+    
+    #tool-container {
+        margin-right: 0; /* Reset margin for mobile */
+        margin-top: 2rem;
+        width: 350px;
+        height: 350px;
+        flex: 0 0 350px;
+    }
+}
+
+@media (max-width: 992px) {
+    .about-content,
+    .contact-content {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+    
+    .hero h1 {
+        font-size: 2.5rem;
+    }
+    
+    .hero .title {
+        font-size: 1.5rem;
+    }
+    
+    .qual-item {
+        justify-content: center;
+    }
+    
+    .ecommerce-item {
+        justify-content: center;
+    }
+    
+    #tool-container {
+        width: 320px;
+        height: 320px;
+        flex: 0 0 320px;
+    }
+}
+
+@media (max-width: 768px) {
+    section {
+        padding: 4rem 0;
+    }
+
+    .nav-links {
+        position: fixed;
+        top: 70px;
+        left: 0;
+        width: 100%;
+        background-color: var(--primary-dark);
+        flex-direction: column;
+        align-items: center;
+        padding: 2rem 0;
+        clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
+        transition: clip-path 0.4s ease;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .nav-links.active {
+        clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+    }
+
+    .nav-links li {
+        margin: 1rem 0;
+    }
+
+    .mobile-menu-btn {
+        display: block;
+    }
+
+    #tool-container {
+        width: 300px;
+        height: 300px;
+        flex: 0 0 300px;
+    }
+    
+    .cta-buttons {
+        justify-content: center;
+    }
+}
+
+@media (max-width: 576px) {
+    h1 {
+        font-size: 2.2rem;
+    }
+    
+    h2 {
+        font-size: 1.8rem;
+    }
+    
+    .hero h1 {
+        font-size: 2.2rem;
+    }
+    
+    .cta-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .btn {
+        width: 100%;
+        max-width: 250px;
+    }
+    
+    .skills-grid,
+    .projects-grid,
+    .certifications-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    #tool-container {
+        width: 280px;
+        height: 280px;
+        flex: 0 0 280px;
+    }
+}
+
+@media (max-width: 480px) {
+    #tool-container {
+        width: 260px;
+        height: 260px;
+        flex: 0 0 260px;
+    }
+    
+    .container {
+        padding: 0 6rem;
+        padding-top: 50px;
+    }
+    
+    .hero-content {
+        padding: 0 1rem;
+    }
+    
+    .contact-form {
+        padding: 1.5rem;
+    }
+}
+
+@media (max-width: 380px) {
+    #tool-container {
+        width: 240px;
+        height: 240px;
+        flex: 0 0 240px;
+    }
+}
+
+/* ===== Professional Experience Project Styles ===== */
+.professional-project {
+    grid-column: 1 / -1;
+    background: white;
+    border-radius: 12px;
+    padding: 2.5rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    margin-bottom: 3rem;
+    border-top: 4px solid var(--construction-orange);
+}
+
+.project-header {
+    margin-bottom: 1.5rem;
+    border-bottom: 2px solid var(--light-blue);
+    padding-bottom: 1.5rem;
+}
+
+.project-header h3 {
+    color: var(--primary-dark);
+    font-size: 1.8rem;
+    margin-bottom: 0.5rem;
+}
+
+.commercial-summary {
+    display: grid;
+    flex-wrap: wrap;
+    gap: 0.2rem;
+    margin-top: 1rem;
+    font-size: 0.95rem;
+    color: var(--secondary-blue);
+}
+
+.commercial-summary div {
+    background: var(--light-blue);
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    border-left: 3px solid var(--construction-gold);
+}
+
+.project-role {
+    color: var(--construction-orange);
+    font-weight: 600;
+    font-size: 1.1rem;
+    display: block;
+}
+
+.project-description {
+    background: rgba(249, 115, 22, 0.05);
+    padding: 1.5rem;
+    border-radius: 8px;
+    margin-bottom: 2rem;
+    border-left: 4px solid var(--construction-gold);
+}
+
+.project-description p {
+    margin-bottom: 0;
+    line-height: 1.6;
+    color: var(--text-dark);
+}
+
+.project-details {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+@media (max-width: 992px) {
+    .project-details {
+        grid-template-columns: 1fr;
+    }
+}
+
+.detail-column {
+    background: var(--light-blue);
+    padding: 1.5rem;
+    border-radius: 8px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.detail-section h4 {
+    color: var(--construction-orange);
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.detail-section ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.detail-section li {
+    margin-bottom: 0.8rem;
+    padding-left: 1.5rem;
+    position: relative;
+    color: var(--text-dark);
+    line-height: 1.5;
+}
+
+.detail-section li:before {
+    content: '';
+    position: absolute;
+    left: 0;
+    color: var(--success-green);
+}
+
+.detail-section li i {
+    position: absolute;
+    left: 0;
+    top: 0.2rem;
+    color: var(--success-green);
+    font-size: 0.9rem;
+}
+
+.project-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--light-blue);
+}
+
+.project-tag {
+    background: var(--light-blue);
+    color: var(--primary-dark);
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    transition: var(--transition);
+}
+
+.project-tag:hover {
+    background: var(--construction-orange);
+    color: white;
+    transform: translateY(-2px);
+}
+
+/* Update existing projects grid for consistency */
+.projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 2.5rem;
+}
+
+.project-card.academic {
+    background-color: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px var(--shadow);
+    transition: var(--transition);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.project-card.academic:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+.project-card.academic .project-img {
+    height: 180px;
+    background-color: var(--secondary-blue);
+    position: relative;
+}
+
+.project-card.academic .project-content {
+    padding: 1.5rem;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.project-card.academic h3 {
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+    color: var(--primary-dark);
+}
+
+.project-card.academic .project-role {
+    color: var(--construction-orange);
+    font-weight: 600;
+    margin-bottom: 0.8rem;
+    font-size: 0.9rem;
+}
+
+.project-card.academic p {
+    margin-bottom: 1rem;
+    color: var(--text-dark);
+    flex-grow: 1;
+}
+
+.project-card.academic .responsibilities {
+    list-style: none;
+    padding-left: 0;
+    margin-top: 1rem;
+}
+
+.project-card.academic .responsibilities li {
+    margin-bottom: 0.5rem;
+    padding-left: 1.2rem;
+    position: relative;
+    font-size: 0.9rem;
+    color: var(--text-dark);
+}
+
+.project-card.academic .responsibilities li:before {
+    content: '▸';
+    position: absolute;
+    left: 0;
+    color: var(--construction-orange);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .professional-project {
+        padding: 1.5rem;
+    }
+    
+    .project-header h3 {
+        font-size: 1.5rem;
+    }
+    
+    .commercial-summary {
+        flex-direction: column;
+        gap: 0.8rem;
+    }
+    
+    .detail-section h4 {
+        font-size: 1.1rem;
+    }
+    
+    .detail-section li {
+        font-size: 0.9rem;
+    }
+    
+    .project-tag {
+        font-size: 0.8rem;
+        padding: 0.4rem 0.8rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .projects-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .professional-project {
+        padding: 1.2rem;
+    }
+}
+
+.ats-keywords {
+    position: absolute;
+    left: -9999px;
+    top: -9999px;
+    height: 0;
+    overflow: hidden;
+    color: transparent;
+    user-select: none;
+}
 
