@@ -1072,3 +1072,14 @@ footer {
         padding: 1.2rem;
     }
 }
+.ats-keywords {
+    position: absolute;
+    left: -9999px;
+    top: -9999px;
+    height: 0;
+    overflow: hidden;
+    color: transparent;
+    user-select: none;
+}
+
+
