@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', function() {
     setupFormValidation();
     setupSmoothScrolling();
     setupParallaxEffect();
-    initContinuousBuildingAnimation(); // Continuous animation
+    initBurjKhalifaAnimation(); // Burj Khalifa style continuous animation
     setupAnimations();
 });
 
@@ -122,8 +122,8 @@ function setupParallaxEffect() {
     });
 }
 
-// Continuous Building Construction Animation
-function initContinuousBuildingAnimation() {
+// Burj Khalifa Style Continuous Building Animation
+function initBurjKhalifaAnimation() {
     const container = document.getElementById('tool-container');
     if (!container) return;
     
@@ -135,7 +135,7 @@ function initContinuousBuildingAnimation() {
     
     // Make container larger for 1/3 screen
     const screenWidth = window.innerWidth;
-    const containerSize = Math.min(screenWidth * 0.33, 400); // 1/3 of screen or max 400px
+    const containerSize = Math.min(screenWidth * 0.33, 450); // 1/3 of screen or max 450px
     container.style.width = containerSize + 'px';
     container.style.height = containerSize + 'px';
     
@@ -145,8 +145,8 @@ function initContinuousBuildingAnimation() {
     
     // Create camera
     const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 1000);
-    camera.position.set(8, 7, 12);
-    camera.lookAt(0, 5, 0);
+    camera.position.set(12, 15, 18);
+    camera.lookAt(0, 20, 0);
     
     // Create renderer
     const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
@@ -155,107 +155,198 @@ function initContinuousBuildingAnimation() {
     container.appendChild(renderer.domElement);
     
     // Add lighting
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.7);
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
     scene.add(ambientLight);
     
-    const directionalLight = new THREE.DirectionalLight(0xf97316, 1.2);
-    directionalLight.position.set(10, 15, 10);
+    const directionalLight = new THREE.DirectionalLight(0xf97316, 1.5);
+    directionalLight.position.set(15, 30, 15);
     scene.add(directionalLight);
     
+    // Create sky background (gradient effect)
+    const skyGeometry = new THREE.SphereGeometry(100, 32, 32);
+    const skyMaterial = new THREE.MeshBasicMaterial({ 
+        color: 0x0d1b2a,
+        side: THREE.BackSide
+    });
+    const sky = new THREE.Mesh(skyGeometry, skyMaterial);
+    scene.add(sky);
+    
+    // Add some stars
+    const starsGeometry = new THREE.BufferGeometry();
+    const starsCount = 1000;
+    const starsPositions = new Float32Array(starsCount * 3);
+    
+    for (let i = 0; i < starsCount * 3; i += 3) {
+        starsPositions[i] = (Math.random() - 0.5) * 200;
+        starsPositions[i + 1] = (Math.random() - 0.5) * 200;
+        starsPositions[i + 2] = (Math.random() - 0.5) * 200;
+    }
+    
+    starsGeometry.setAttribute('position', new THREE.BufferAttribute(starsPositions, 3));
+    const starsMaterial = new THREE.PointsMaterial({ 
+        color: 0xffffff,
+        size: 0.5,
+        transparent: true,
+        opacity: 0.8
+    });
+    const stars = new THREE.Points(starsGeometry, starsMaterial);
+    scene.add(stars);
+    
     // Create ground
-    const groundGeometry = new THREE.PlaneGeometry(20, 20);
+    const groundGeometry = new THREE.PlaneGeometry(50, 50);
     const groundMaterial = new THREE.MeshStandardMaterial({ 
-        color: 0x2d3748,
-        roughness: 0.9
+        color: 0x1a2a3a,
+        roughness: 0.8
     });
     const ground = new THREE.Mesh(groundGeometry, groundMaterial);
     ground.rotation.x = -Math.PI / 2;
-    ground.position.y = -0.5;
+    ground.position.y = -1;
     scene.add(ground);
     
-    // Add grid
-    const gridHelper = new THREE.GridHelper(20, 20, 0x4a5568, 0x2d3748);
-    gridHelper.position.y = -0.49;
+    // Add city grid
+    const gridHelper = new THREE.GridHelper(50, 50, 0x2d3748, 0x1a2a3a);
+    gridHelper.position.y = -0.99;
     scene.add(gridHelper);
     
-    // Building foundation
-    const foundationGeometry = new THREE.BoxGeometry(4, 0.5, 4);
+    // Create Burj Khalifa foundation (wider base)
+    const foundationGeometry = new THREE.CylinderGeometry(4, 4, 1, 32);
     const foundationMaterial = new THREE.MeshStandardMaterial({ 
-        color: 0x4a5568
+        color: 0x4a5568,
+        roughness: 0.9
     });
     const foundation = new THREE.Mesh(foundationGeometry, foundationMaterial);
-    foundation.position.y = 0;
+    foundation.position.y = 0.5;
     scene.add(foundation);
     
-    // Simple crane
-    const craneGroup = new THREE.Group();
-    
-    const craneBase = new THREE.Mesh(
-        new THREE.BoxGeometry(0.5, 1.5, 0.5),
-        new THREE.MeshStandardMaterial({ color: 0x718096 })
-    );
-    craneBase.position.set(-6, 0.75, -3);
-    craneGroup.add(craneBase);
-    
-    const craneArm = new THREE.Mesh(
-        new THREE.BoxGeometry(10, 0.15, 0.15),
-        new THREE.MeshStandardMaterial({ color: 0xf97316 })
-    );
-    craneArm.position.set(-1, 6, -3);
-    craneGroup.add(craneArm);
-    
-    const craneHook = new THREE.Mesh(
-        new THREE.ConeGeometry(0.2, 0.5, 8),
-        new THREE.MeshStandardMaterial({ color: 0xd4af37 })
-    );
-    craneHook.position.set(3, 4, -3);
-    craneHook.rotation.x = Math.PI;
-    craneGroup.add(craneHook);
-    
-    scene.add(craneGroup);
-    
-    // Building parameters
-    const buildingWidth = 4;
-    const buildingDepth = 4;
-    const floorHeight = 1;
-    const totalFloors = 5;
-    const floors = [];
-    const floorColors = [
+    // Building parameters for Burj Khalifa style
+    const totalSections = 8; // More sections for tapered effect
+    const baseRadius = 3.5;
+    const topRadius = 0.8;
+    const totalHeight = 35;
+    const sections = [];
+    const sectionColors = [
+        0x4a5568, // Dark gray
+        0x2d3748, // Charcoal
+        0x0d1b2a, // Navy
+        0x1a2a3a, // Dark blue
         0xf97316, // Orange
         0xd4af37, // Gold
         0x2d3748, // Charcoal
-        0x0d1b2a, // Navy
-        0xf97316  // Orange (top)
+        0x0d1b2a  // Navy
     ];
     
-    // Animation variables
-    let animationTime = 0;
-    let currentCycle = 0;
-    let floorsBuilt = 0;
-    let buildingState = 'constructing'; // constructing, complete, resetting
+    // Create construction cranes (multiple)
+    const cranes = [];
+    const cranePositions = [
+        { x: -8, z: -5 },
+        { x: 6, z: -7 },
+        { x: -5, z: 6 }
+    ];
     
-    // Create all floors initially (hidden)
-    for (let i = 0; i < totalFloors; i++) {
-        const floorGeometry = new THREE.BoxGeometry(buildingWidth, floorHeight, buildingDepth);
-        const floorMaterial = new THREE.MeshStandardMaterial({ 
-            color: floorColors[i],
+    cranePositions.forEach((pos, index) => {
+        const craneGroup = new THREE.Group();
+        
+        // Crane base
+        const craneBase = new THREE.Mesh(
+            new THREE.CylinderGeometry(0.3, 0.5, 2, 8),
+            new THREE.MeshStandardMaterial({ color: 0x718096 })
+        );
+        craneBase.position.set(pos.x, 1, pos.z);
+        craneGroup.add(craneBase);
+        
+        // Crane tower
+        const craneTower = new THREE.Mesh(
+            new THREE.BoxGeometry(0.2, 25, 0.2),
+            new THREE.MeshStandardMaterial({ color: 0x4a5568 })
+        );
+        craneTower.position.set(pos.x, 12.5, pos.z);
+        craneGroup.add(craneTower);
+        
+        // Crane arm
+        const craneArmLength = 8 + index * 2;
+        const craneArm = new THREE.Mesh(
+            new THREE.BoxGeometry(craneArmLength, 0.1, 0.1),
+            new THREE.MeshStandardMaterial({ color: 0xf97316 })
+        );
+        craneArm.position.set(pos.x + craneArmLength/2 - 2, 24, pos.z);
+        craneGroup.add(craneArm);
+        
+        // Crane hook
+        const craneHook = new THREE.Mesh(
+            new THREE.SphereGeometry(0.2, 8, 8),
+            new THREE.MeshStandardMaterial({ color: 0xd4af37 })
+        );
+        craneHook.position.set(pos.x + 3, 20, pos.z);
+        craneGroup.add(craneHook);
+        
+        craneGroup.userData = {
+            basePos: { x: pos.x, z: pos.z },
+            armLength: craneArmLength,
+            hookSpeed: 2 + index * 0.5,
+            armSpeed: 0.5 + index * 0.2
+        };
+        
+        cranes.push(craneGroup);
+        scene.add(craneGroup);
+    });
+    
+    // Create all building sections initially (hidden)
+    for (let i = 0; i < totalSections; i++) {
+        const sectionHeight = totalHeight / totalSections;
+        const radiusRatio = i / totalSections;
+        const radius = baseRadius * (1 - radiusRatio * 0.7) + topRadius * (radiusRatio * 0.3);
+        const nextRadius = baseRadius * (1 - (i + 1) / totalSections * 0.7) + topRadius * ((i + 1) / totalSections * 0.3);
+        
+        const sectionGeometry = new THREE.CylinderGeometry(
+            nextRadius, // top radius (smaller)
+            radius,     // bottom radius (larger)
+            sectionHeight,
+            16
+        );
+        
+        const sectionMaterial = new THREE.MeshStandardMaterial({ 
+            color: sectionColors[i],
             transparent: true,
             opacity: 0
         });
-        const floor = new THREE.Mesh(floorGeometry, floorMaterial);
-        floor.position.y = i * floorHeight + 0.5;
-        floor.scale.y = 0.1;
-        floor.userData.index = i;
-        floors.push(floor);
-        scene.add(floor);
         
-        // Add construction lines
-        const edges = new THREE.EdgesGeometry(floorGeometry);
+        const section = new THREE.Mesh(sectionGeometry, sectionMaterial);
+        section.position.y = i * sectionHeight + 1;
+        section.scale.y = 0.1; // Start very small
+        section.userData = {
+            index: i,
+            targetHeight: sectionHeight,
+            radius: radius
+        };
+        
+        sections.push(section);
+        scene.add(section);
+        
+        // Add construction grid to sections
+        const edges = new THREE.EdgesGeometry(sectionGeometry);
         const line = new THREE.LineSegments(edges, new THREE.LineBasicMaterial({ 
-            color: 0xffffff
+            color: 0xffffff,
+            linewidth: 1
         }));
-        floor.add(line);
+        section.add(line);
     }
+    
+    // Add spire/antenna at the top
+    const spireGeometry = new THREE.CylinderGeometry(0.3, 0.5, 8, 8);
+    const spireMaterial = new THREE.MeshStandardMaterial({ 
+        color: 0xd4af37,
+        emissive: 0xd4af37,
+        emissiveIntensity: 0.3
+    });
+    const spire = new THREE.Mesh(spireGeometry, spireMaterial);
+    spire.position.y = totalHeight + 1 + 4;
+    spire.visible = false;
+    scene.add(spire);
+    
+    // Animation variables for 12-second loop
+    let animationTime = 0;
+    const totalCycleTime = 12; // 12-second complete cycle
+    let buildingComplete = false;
     
     // Handle window resize
     window.addEventListener('resize', function() {
@@ -263,7 +354,7 @@ function initContinuousBuildingAnimation() {
         if (!container || !camera || !renderer) return;
         
         const screenWidth = window.innerWidth;
-        const containerSize = Math.min(screenWidth * 0.33, 400);
+        const containerSize = Math.min(screenWidth * 0.33, 450);
         container.style.width = containerSize + 'px';
         container.style.height = containerSize + 'px';
         
@@ -277,84 +368,133 @@ function initContinuousBuildingAnimation() {
         requestAnimationFrame(animate);
         
         animationTime += 0.016; // ~60fps
-        const cycleTime = animationTime % 8; // 8-second cycle
+        const cycleTime = animationTime % totalCycleTime; // 12-second cycle
         
-        // Camera movement (continuous slow rotation)
-        camera.position.x = 8 * Math.cos(animationTime * 0.1);
-        camera.position.z = 12 * Math.sin(animationTime * 0.1);
-        camera.lookAt(0, 6, 0);
+        // Calculate progress through the cycle (0 to 1)
+        const progress = cycleTime / totalCycleTime;
         
-        // Crane movement
-        craneArm.rotation.y = Math.sin(animationTime * 1.5) * 0.4;
-        craneHook.position.x = 3 + Math.cos(animationTime * 2) * 2;
-        craneHook.position.y = 4 + Math.sin(animationTime * 3) * 1.5;
+        // Smooth camera rotation around the building
+        const cameraRadius = 25;
+        const cameraHeight = 20 + Math.sin(animationTime * 0.05) * 5;
+        camera.position.x = cameraRadius * Math.cos(animationTime * 0.1);
+        camera.position.z = cameraRadius * Math.sin(animationTime * 0.1);
+        camera.position.y = cameraHeight;
+        camera.lookAt(0, 15, 0);
         
-        // Building construction cycle
-        if (cycleTime < 6) {
-            // Construction phase (6 seconds)
-            buildingState = 'constructing';
-            const constructionProgress = cycleTime / 6; // 0 to 1
+        // Animate cranes
+        cranes.forEach((crane, index) => {
+            const data = crane.userData;
             
-            // Determine which floor should be visible
-            const targetFloor = Math.floor(constructionProgress * totalFloors);
+            // Rotate crane arms
+            const arm = crane.children[2];
+            arm.rotation.y = Math.sin(animationTime * data.armSpeed) * 0.5;
             
-            // Update floors
-            floors.forEach((floor, index) => {
-                if (index <= targetFloor) {
-                    // This floor should be (partially) visible
-                    const floorProgress = (constructionProgress - (index / totalFloors)) * totalFloors;
+            // Move crane hooks
+            const hook = crane.children[3];
+            hook.position.x = data.basePos.x + Math.cos(animationTime * data.hookSpeed) * 4;
+            hook.position.y = 18 + Math.sin(animationTime * data.hookSpeed * 1.5) * 3;
+            hook.position.z = data.basePos.z + Math.sin(animationTime * data.hookSpeed * 0.7) * 2;
+        });
+        
+        // Rotate stars slowly
+        stars.rotation.y += 0.0005;
+        
+        // Building construction phases
+        if (cycleTime < 10) {
+            // Construction phase (10 seconds)
+            const constructionProgress = cycleTime / 10; // 0 to 1 over 10 seconds
+            
+            // Calculate which sections should be visible
+            const targetSection = Math.floor(constructionProgress * totalSections);
+            
+            // Update each section
+            sections.forEach((section, index) => {
+                if (index <= targetSection) {
+                    // This section should be (partially) visible
+                    const sectionProgress = (constructionProgress - (index / totalSections)) * totalSections;
                     
-                    if (floorProgress >= 0 && floorProgress <= 0.8) {
-                        // Grow animation
-                        const growProgress = Math.min(floorProgress * 1.25, 1);
-                        floor.scale.y = 0.1 + (growProgress * 0.9);
-                        floor.material.opacity = growProgress;
-                    } else if (floorProgress > 0.8) {
-                        // Fully grown
-                        floor.scale.y = 1;
-                        floor.material.opacity = 1;
+                    if (sectionProgress >= 0 && sectionProgress <= 0.7) {
+                        // Grow animation (70% of section time)
+                        const growProgress = Math.min(sectionProgress * 1.428, 1); // 1/0.7 = 1.428
+                        section.scale.y = 0.1 + (growProgress * 0.9);
+                        section.material.opacity = growProgress * 0.9;
+                        
+                        // Gentle pulse during growth
+                        const pulse = Math.sin(animationTime * 3) * 0.05 + 1;
+                        section.scale.x = pulse;
+                        section.scale.z = pulse;
+                    } else if (sectionProgress > 0.7 && sectionProgress <= 0.9) {
+                        // Solidify (20% of section time)
+                        section.scale.y = 1;
+                        section.material.opacity = 0.9 + (sectionProgress - 0.7) * 0.5;
+                    } else if (sectionProgress > 0.9) {
+                        // Completed (10% of section time)
+                        section.scale.y = 1;
+                        section.material.opacity = 1;
+                        
+                        // Subtle glow for completed sections
+                        const glow = Math.sin(animationTime * 2 + index) * 0.05 + 0.95;
+                        section.scale.set(glow, 1, glow);
                     }
                 } else {
-                    // Floor not built yet
-                    floor.scale.y = 0.1;
-                    floor.material.opacity = 0;
-                }
-                
-                // Gentle pulse for completed floors
-                if (index <= targetFloor - 1) {
-                    const pulse = Math.sin(animationTime * 2 + index) * 0.05 + 1;
-                    floor.scale.set(pulse, pulse, pulse);
+                    // Section not built yet
+                    section.scale.y = 0.1;
+                    section.material.opacity = 0;
                 }
             });
             
-            floorsBuilt = targetFloor + 1;
+            // Show spire when building is nearly complete
+            if (targetSection >= totalSections - 1 && constructionProgress > 0.95) {
+                spire.visible = true;
+                const spireProgress = (constructionProgress - 0.95) * 20; // Last 5%
+                spire.scale.y = Math.min(spireProgress, 1);
+                spire.material.emissiveIntensity = 0.3 + Math.sin(animationTime * 3) * 0.2;
+            } else {
+                spire.visible = false;
+            }
+            
+            buildingComplete = false;
             
         } else {
-            // Completion phase (2 seconds) - building complete, gentle pulse
-            buildingState = 'complete';
-            const completeProgress = (cycleTime - 6) / 2;
+            // Completion and celebration phase (2 seconds)
+            buildingComplete = true;
+            const celebrationProgress = (cycleTime - 10) / 2;
             
-            // All floors visible and pulsing
-            floors.forEach((floor, index) => {
-                floor.scale.y = 1;
-                floor.material.opacity = 1;
+            // All sections fully visible
+            sections.forEach((section, index) => {
+                section.scale.y = 1;
+                section.material.opacity = 1;
                 
-                // Pulsing effect
-                const pulse = Math.sin(animationTime * 3 + index) * 0.1 + 1;
-                floor.scale.set(pulse, pulse, pulse);
+                // Celebration pulse effect
+                const pulseSpeed = 3 + index * 0.5;
+                const pulse = Math.sin(animationTime * pulseSpeed + index) * 0.1 + 1;
+                section.scale.set(pulse, 1, pulse);
                 
-                // Glow effect on top floor
-                if (index === totalFloors - 1) {
-                    floor.material.emissive = new THREE.Color(0xd4af37);
-                    floor.material.emissiveIntensity = 0.2 + Math.sin(animationTime * 4) * 0.1;
+                // Color shifting for celebration
+                if (celebrationProgress > 0.5) {
+                    const hueShift = Math.sin(animationTime * 2 + index) * 0.1;
+                    section.material.color.offsetHSL(hueShift, 0, 0);
                 }
             });
             
-            // Reset after completion phase
-            if (completeProgress >= 0.95) {
-                // Reset for next cycle
-                floorsBuilt = 0;
-                currentCycle++;
+            // Spire effects
+            spire.visible = true;
+            spire.scale.y = 1;
+            spire.material.emissiveIntensity = 0.5 + Math.sin(animationTime * 5) * 0.3;
+            
+            // Add particles/sparkles during celebration
+            if (celebrationProgress > 0.7) {
+                spire.material.emissiveIntensity = 0.8 + Math.sin(animationTime * 8) * 0.4;
+            }
+            
+            // Reset building at end of celebration (smooth transition)
+            if (celebrationProgress > 0.95) {
+                // Gradually fade out for reset
+                const fadeOut = 1 - (celebrationProgress - 0.95) * 20;
+                sections.forEach(section => {
+                    section.material.opacity = fadeOut;
+                });
+                spire.material.opacity = fadeOut;
             }
         }
         
@@ -369,19 +509,22 @@ function initContinuousBuildingAnimation() {
     const animationLabel = document.createElement('div');
     animationLabel.style.cssText = `
         position: absolute;
-        bottom: 15px;
+        bottom: 20px;
         left: 0;
         right: 0;
         text-align: center;
         color: #d4af37;
-        font-size: 14px;
+        font-size: 16px;
         font-weight: bold;
         z-index: 10;
         font-family: 'Montserrat', sans-serif;
-        text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
-        letter-spacing: 1px;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+        letter-spacing: 1.5px;
+        background: rgba(13, 27, 42, 0.7);
+        padding: 8px;
+        border-radius: 0 0 15px 15px;
     `;
-    animationLabel.innerHTML = '🏗️ Continuous Construction';
+    animationLabel.innerHTML = '🏗️ Burj Khalifa Style Construction';
     container.appendChild(animationLabel);
 }
 
