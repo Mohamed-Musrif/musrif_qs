@@ -184,12 +184,21 @@ header {
     overflow: hidden;
 }
 
+.hero .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+    min-height: 80vh;
+    flex-wrap: wrap;
+}
+
 .hero-content {
-    max-width: 800px;
+    flex: 1;
+    max-width: 600px;
     z-index: 2;
     position: relative;
-    width: 60%; /* Take 60% width for content */
-    padding-right: 40%; /* Make space for the 3D animation */
+    min-width: 300px;
 }
 
 .hero h1 {
@@ -258,16 +267,8 @@ header {
 
 /* ===== Burj Khalifa Animation Container ===== */
 #tool-container {
-    position: absolute;
-    top: 50%;
-    right: 5%;
-    transform: translateY(-50%);
-    width: 35vw; /* 35% of viewport width */
-    max-width: 450px;
-    min-width: 280px;
-    height: 35vw;
-    max-height: 450px;
-    min-height: 280px;
+    flex: 0 0 400px;
+    height: 400px;
     z-index: 1;
     border-radius: 20px;
     overflow: hidden;
@@ -280,6 +281,8 @@ header {
     display: flex;
     align-items: center;
     justify-content: center;
+    margin-left: 2rem;
+    position: relative;
 }
 
 #tool-container canvas {
@@ -674,14 +677,31 @@ footer {
 
 /* ===== Responsive Design ===== */
 @media (max-width: 1200px) {
+    .hero .container {
+        flex-direction: column;
+        text-align: center;
+        justify-content: center;
+    }
+    
     .hero-content {
-        width: 55%;
-        padding-right: 35%;
+        max-width: 800px;
+        margin-bottom: 3rem;
     }
     
     #tool-container {
-        width: 30vw;
-        height: 30vw;
+        margin-left: 0;
+        margin-top: 2rem;
+        flex: 0 0 350px;
+        width: 350px;
+        height: 350px;
+    }
+    
+    .hero h1 {
+        font-size: 3rem;
+    }
+    
+    .hero .title {
+        font-size: 1.8rem;
     }
 }
 
@@ -690,7 +710,7 @@ footer {
         grid-template-columns: 1fr;
         gap: 3rem;
     }
-
+    
     h1 {
         font-size: 2.8rem;
     }
@@ -702,7 +722,6 @@ footer {
     .hero-content {
         width: 100%;
         text-align: center;
-        padding-right: 0;
     }
     
     .hero p {
@@ -820,5 +839,24 @@ footer {
     
     .hero p {
         font-size: 1rem;
+    }
+    
+    .hero-content {
+        padding: 0 1rem;
+    }
+    
+    .contact-form {
+        padding: 1.5rem;
+    }
+}
+
+@media (max-width: 380px) {
+    #tool-container {
+        width: 250px;
+        height: 250px;
+    }
+    
+    .hero h1 {
+        font-size: 2rem;
     }
 }
