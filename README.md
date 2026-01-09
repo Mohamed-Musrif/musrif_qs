@@ -1,14 +1,32 @@
-# Professional Quantity Surveyor Portfolio Website
+# Aliyar Mohamed Musrif - Professional Quantity Surveyor Portfolio
 
-A modern, mobile-first, responsive portfolio website for a Quantity Surveyor, designed for GitHub Pages deployment.
+![Portfolio Preview](https://images.unsplash.com/photo-1504307651254-35680f356dfd?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80)
 
-## Features
+## 🏗️ Professional Portfolio Website
 
-- **Responsive Design**: Mobile-first approach with full responsiveness
-- **Modern UI**: Construction-themed color scheme with dark navy/orange palette
-- **3D Elements**: Lightweight Three.js animations for construction tools
-- **Performance Optimized**: Fast loading for GitHub Pages
-- **SEO Friendly**: Proper meta tags and semantic HTML
-- **Contact Form**: Functional contact form (can integrate with Formspree)
+A modern, mobile-first, responsive portfolio website for a Quantity Surveyor showcasing academic achievements and professional skills. Currently pursuing BSc in Quantity Surveying (Honours) after completing HND in Quantity Surveying with distinction.
 
-## File Structure
+## 📋 About Me
+
+- **Full Name**: Aliyar Mohamed Musrif
+- **Qualifications**: 
+  - HND in Quantity Surveying (Completed with Distinction)
+  - BSc in Quantity Surveying (Honours) - Currently Pursuing
+- **Specialization**: Construction Cost Management, BOQ Preparation, Contract Administration
+- **Career Objective**: To become a Chartered Quantity Surveyor (MRICS) and contribute to sustainable construction projects
+
+## 🛠️ Technical Skills
+
+- **Quantity Take-Off**: SMM7, NRM standards
+- **Cost Estimation**: Preliminary & detailed estimates
+- **BOQ Preparation**: Elemental breakdown and pricing
+- **Software**: AutoCAD, MS Excel, MS Project, Revit, CostX
+- **Contract Knowledge**: FIDIC, JCT, ICE forms
+
+## 🌐 Live Website
+
+Visit my portfolio: [https://mohamed-musrif.github.io/musrif_qs/](https://mohamed-musrif.github.io/musrif_qs/)
+
+## 📁 Project Structure
+
+
