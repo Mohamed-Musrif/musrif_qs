@@ -17,7 +17,7 @@ A modern, mobile-first, responsive portfolio website for a Quantity Surveyor sho
 
 ## 🛠️ Technical Skills
 
-- **Quantity Take-Off**: SMM7, NRM standards
+- **Quantity Take-Off**: SMM7, NRM & POMI standards
 - **Cost Estimation**: Preliminary & detailed estimates
 - **BOQ Preparation**: Elemental breakdown and pricing
 - **Software**: AutoCAD, MS Excel, MS Project, Revit, CostX
@@ -28,5 +28,6 @@ A modern, mobile-first, responsive portfolio website for a Quantity Surveyor sho
 Visit my portfolio: [https://mohamed-musrif.github.io/musrif_qs/](https://mohamed-musrif.github.io/musrif_qs/)
 
 ## 📁 Project Structure
+
 
 
