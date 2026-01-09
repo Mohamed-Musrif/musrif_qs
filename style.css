@@ -191,7 +191,7 @@ header {
     align-items: center;
     flex-wrap: wrap;
     gap: 2rem;
-    padding-right: 40px; /* Added right padding */
+    padding-right: -40px; /* Added right padding */
 }
 
 .hero-content {
@@ -1135,3 +1135,4 @@ footer {
     color: transparent;
     user-select: none;
 }
+
