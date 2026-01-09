@@ -96,6 +96,49 @@ header {
     z-index: 1000;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     transition: var(--transition);
+} 
+/* ===== Enhanced 3D Container Styles ===== */
+#tool-container {
+    position: absolute;
+    top: 10%;
+    right: 5%;
+    width: 300px;
+    height: 300px;
+    z-index: 1;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    border: 2px solid var(--construction-gold);
+    background: linear-gradient(135deg, rgba(13, 27, 42, 0.9), rgba(45, 55, 72, 0.9));
+}
+
+#tool-container canvas {
+    border-radius: 8px;
+}
+
+/* Construction label */
+#construction-progress {
+    font-family: 'Montserrat', sans-serif;
+    letter-spacing: 1px;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
+}
+
+/* Mobile adjustments for 3D container */
+@media (max-width: 768px) {
+    #tool-container {
+        display: block !important; /* Override the previous display: none */
+        position: relative;
+        top: auto;
+        right: auto;
+        width: 250px;
+        height: 250px;
+        margin: 2rem auto;
+    }
 }
 
 .nav-container {
@@ -729,3 +772,4 @@ footer {
         grid-template-columns: 1fr;
     }
 }
+
