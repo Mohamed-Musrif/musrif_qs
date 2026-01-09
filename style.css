@@ -772,4 +772,51 @@ footer {
         grid-template-columns: 1fr;
     }
 }
+/* ===== Fast 3D Animation Container ===== */
+#tool-container {
+    position: absolute;
+    top: 10%;
+    right: 5%;
+    width: 250px;
+    height: 250px;
+    z-index: 1;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4);
+    border: 2px solid var(--construction-gold);
+    background: linear-gradient(135deg, rgba(13, 27, 42, 0.95), rgba(249, 115, 22, 0.1));
+}
+
+#tool-container canvas {
+    border-radius: 8px;
+    display: block;
+}
+
+/* Mobile adjustments for 3D container */
+@media (max-width: 992px) {
+    #tool-container {
+        width: 200px;
+        height: 200px;
+        right: 3%;
+    }
+}
+
+@media (max-width: 768px) {
+    #tool-container {
+        position: relative;
+        top: auto;
+        right: auto;
+        width: 250px;
+        height: 250px;
+        margin: 2rem auto;
+        display: block !important;
+    }
+}
+
+@media (max-width: 576px) {
+    #tool-container {
+        width: 200px;
+        height: 200px;
+    }
+}
 
