@@ -9,9 +9,10 @@ document.addEventListener('DOMContentLoaded', function() {
     initMobileMenu();
     setCurrentYear();
     setupFormValidation();
-    setupScrollAnimations();
     setupSmoothScrolling();
     setupParallaxEffect();
+    init3DTool(); // Initialize 3D tool
+    setupAnimations();
 });
 
 // Mobile Navigation Toggle
@@ -66,9 +67,6 @@ function setupFormValidation() {
             return;
         }
         
-        // In a real application, you would send the form data to a server
-        // For GitHub Pages (static site), you can use Formspree or similar service
-        
         // Simulate form submission
         const submitBtn = contactForm.querySelector('button[type="submit"]');
         const originalText = submitBtn.textContent;
@@ -77,33 +75,11 @@ function setupFormValidation() {
         submitBtn.disabled = true;
         
         setTimeout(() => {
-            alert('Thank you for your message! I will get back to you soon.');
+            alert('Thank you for your message, Aliyar! I will get back to you soon.');
             contactForm.reset();
             submitBtn.textContent = originalText;
             submitBtn.disabled = false;
         }, 1500);
-    });
-}
-
-// Scroll animations
-function setupScrollAnimations() {
-    const revealElements = document.querySelectorAll('.reveal');
-    
-    if (!revealElements.length) return;
-    
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('active');
-            }
-        });
-    }, {
-        threshold: 0.1,
-        rootMargin: '0px 0px -50px 0px'
-    });
-    
-    revealElements.forEach(element => {
-        observer.observe(element);
     });
 }
 
@@ -131,12 +107,6 @@ function setupSmoothScrolling() {
 function setupParallaxEffect() {
     window.addEventListener('scroll', function() {
         const scrolled = window.pageYOffset;
-        const parallaxElements = document.querySelectorAll('.parallax');
-        
-        parallaxElements.forEach(element => {
-            const speed = element.dataset.speed || 0.5;
-            element.style.transform = `translateY(${scrolled * speed}px)`;
-        });
         
         // Sticky header effect
         const header = document.querySelector('header');
@@ -152,24 +122,107 @@ function setupParallaxEffect() {
     });
 }
 
-// Add animation classes to elements on page load
-window.addEventListener('load', function() {
+// Three.js 3D Construction Tools Animation
+function init3DTool() {
+    const container = document.getElementById('tool-container');
+    if (!container) return;
+    
+    // Check if Three.js is loaded
+    if (typeof THREE === 'undefined') {
+        console.error('Three.js is not loaded. Cannot initialize 3D tool.');
+        return;
+    }
+    
+    // Create scene
+    const scene = new THREE.Scene();
+    
+    // Create camera
+    const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 1000);
+    camera.position.z = 5;
+    
+    // Create renderer
+    const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+    renderer.setSize(300, 300);
+    renderer.setClearColor(0x000000, 0);
+    container.appendChild(renderer.domElement);
+    
+    // Add lighting
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+    scene.add(ambientLight);
+    
+    const directionalLight = new THREE.DirectionalLight(0xf97316, 1);
+    directionalLight.position.set(5, 5, 5);
+    scene.add(directionalLight);
+    
+    // Create construction tool (simplified cube with materials)
+    const geometry = new THREE.BoxGeometry(1.5, 1.5, 1.5);
+    const materials = [
+        new THREE.MeshStandardMaterial({ color: 0x2d3748 }), // charcoal
+        new THREE.MeshStandardMaterial({ color: 0xf97316 }), // orange
+        new THREE.MeshStandardMaterial({ color: 0x0d1b2a }), // navy
+        new THREE.MeshStandardMaterial({ color: 0xd4af37 }), // gold
+        new THREE.MeshStandardMaterial({ color: 0x2d3748 }), // charcoal
+        new THREE.MeshStandardMaterial({ color: 0xf97316 }), // orange
+    ];
+    const cube = new THREE.Mesh(geometry, materials);
+    scene.add(cube);
+    
+    // Add wireframe for construction look
+    const edges = new THREE.EdgesGeometry(geometry);
+    const line = new THREE.LineSegments(edges, new THREE.LineBasicMaterial({ color: 0xffffff }));
+    cube.add(line);
+    
+    // Handle window resize
+    window.addEventListener('resize', function() {
+        const container = document.getElementById('tool-container');
+        if (!container || !camera || !renderer) return;
+        
+        const width = container.clientWidth;
+        const height = container.clientHeight;
+        
+        renderer.setSize(width, height);
+        camera.aspect = width / height;
+        camera.updateProjectionMatrix();
+    });
+    
+    // Animation loop
+    function animate() {
+        requestAnimationFrame(animate);
+        
+        // Rotate the cube
+        cube.rotation.x += 0.005;
+        cube.rotation.y += 0.01;
+        
+        if (renderer && scene && camera) {
+            renderer.render(scene, camera);
+        }
+    }
+    
+    // Start animation
+    animate();
+}
+
+// Setup animations
+function setupAnimations() {
+    // Add animation classes to elements on page load
     document.body.classList.add('page-transition');
     
     // Add animation delay to skill cards
     const skillCards = document.querySelectorAll('.skill-card');
     skillCards.forEach((card, index) => {
         card.style.animationDelay = `${index * 0.1}s`;
+        card.classList.add('fade-in');
     });
     
     // Add animation delay to project cards
     const projectCards = document.querySelectorAll('.project-card');
     projectCards.forEach((card, index) => {
         card.style.animationDelay = `${index * 0.15}s`;
+        card.classList.add('fade-in');
     });
-});
+}
 
-// Utility function for debouncing (performance optimization)
+// Handle window resize with debounce
 function debounce(func, wait) {
     let timeout;
     return function executedFunction(...args) {
@@ -182,7 +235,6 @@ function debounce(func, wait) {
     };
 }
 
-// Handle window resize with debounce
 window.addEventListener('resize', debounce(function() {
     // Close mobile menu on resize to desktop
     if (window.innerWidth > 768 && navLinks) {
@@ -192,6 +244,3 @@ window.addEventListener('resize', debounce(function() {
         }
     }
 }, 250));
-
-// Export functions for use in other modules (if needed)
-export { initMobileMenu, setupFormValidation, setupSmoothScrolling };
