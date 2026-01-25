@@ -12,7 +12,6 @@ document.addEventListener('DOMContentLoaded', function() {
     setupSmoothScrolling();
     initBurjKhalifaAnimation();
     setupAnimations();
-    initLogoEffects(); // Add this line
 });
 
 // Mobile Navigation Toggle
@@ -78,46 +77,6 @@ function setupFormValidation() {
             submitBtn.textContent = originalText;
             submitBtn.disabled = false;
         }, 1500);
-    });
-}
-// Add interactive effects to logo
-function initLogoEffects() {
-    const logo = document.querySelector('.logo');
-    if (!logo) return;
-    
-    // Pause/play ring animation on hover
-    logo.addEventListener('mouseenter', function() {
-        const ring = this.querySelector('.construction-ring');
-        if (ring) {
-            ring.style.animationPlayState = 'running';
-        }
-    });
-    
-    logo.addEventListener('mouseleave', function() {
-        const ring = this.querySelector('.construction-ring');
-        if (ring) {
-            ring.style.animationPlayState = 'paused';
-        }
-    });
-    
-    // Add click effect
-    logo.addEventListener('click', function(e) {
-        e.preventDefault();
-        
-        // Ripple effect on QS badge
-        const qsBadge = this.querySelector('.qs-badge');
-        if (qsBadge) {
-            qsBadge.style.transform = 'scale(0.95)';
-            setTimeout(() => {
-                qsBadge.style.transform = 'scale(1)';
-            }, 150);
-        }
-        
-        // Smooth scroll to top
-        window.scrollTo({
-            top: 0,
-            behavior: 'smooth'
-        });
     });
 }
 
@@ -795,4 +754,3 @@ function initBurjKhalifaAnimation() {
     // Start animation
     animate();
 }
-
