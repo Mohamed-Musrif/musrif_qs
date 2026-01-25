@@ -707,9 +707,12 @@ header {
 }
 
 .project-img {
-    height: 200px;
+    min-height: 200px;
     background-color: var(--secondary-blue);
     position: relative;
+
+     background-position: center;
+  background-repeat: no-repeat;
 }
 
 .project-content {
@@ -1458,4 +1461,5 @@ footer {
     color: transparent;
     user-select: none;
 }
+
 
