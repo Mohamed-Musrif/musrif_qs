@@ -13,6 +13,7 @@ document.addEventListener('DOMContentLoaded', function() {
     initBurjKhalifaAnimation();
     setupAnimations();
     initLogoEffects(); // Add this line
+    initSkillMeters();
 });
 
 // Mobile Navigation Toggle
@@ -794,4 +795,44 @@ function initBurjKhalifaAnimation() {
     
     // Start animation
     animate();
+}
+
+
+
+// Skill meters (animate small bars on scroll)
+function initSkillMeters() {
+    const meters = document.querySelectorAll('.skill-meter');
+    if (!meters.length) return;
+
+    const animateMeter = (meter) => {
+        const percent = parseInt(meter.getAttribute('data-percent') || '0', 10);
+        const fill = meter.querySelector('.skill-meter-fill');
+        const label = meter.querySelector('.skill-meter-label');
+
+        if (label) label.textContent = `${percent}%`;
+        if (fill) {
+            // Trigger transition
+            requestAnimationFrame(() => {
+                fill.style.width = `${Math.max(0, Math.min(100, percent))}%`;
+            });
+        }
+        meter.classList.add('is-visible');
+    };
+
+    // Use IntersectionObserver for subtle on-scroll animation
+    if ('IntersectionObserver' in window) {
+        const observer = new IntersectionObserver((entries, obs) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    animateMeter(entry.target);
+                    obs.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.35 });
+
+        meters.forEach(m => observer.observe(m));
+    } else {
+        // Fallback: animate immediately
+        meters.forEach(animateMeter);
+    }
 }
