@@ -70,8 +70,7 @@ p {
     width: 100%;
     max-width: 1200px;
     margin: 0 auto;
-    
-    padding: 0 1rem;
+    padding: 0 1.5rem;
 }
 
 section {
@@ -105,6 +104,7 @@ header {
     justify-content: space-between;
     align-items: center;
     padding: 1.2rem 1.5rem;
+    min-height: 70px;
 }
 
 /* ===== Professional QS Logo with Construction Elements ===== */
@@ -115,12 +115,16 @@ header {
     align-items: center;
     gap: 0.8rem;
     position: relative;
+    min-width: fit-content;
+    white-space: nowrap;
+    z-index: 2;
 }
 
 .logo .qs-container {
     position: relative;
     width: 50px;
     height: 50px;
+    flex-shrink: 0;
 }
 
 .logo .qs-badge {
@@ -272,6 +276,8 @@ header {
     flex-direction: column;
     line-height: 1.1;
     padding-left: 0.5rem;
+    flex-shrink: 1;
+    min-width: 0;
 }
 
 .logo .name {
@@ -280,6 +286,8 @@ header {
     color: var(--text-light);
     letter-spacing: 0.8px;
     white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .logo .title-container {
@@ -287,6 +295,7 @@ header {
     align-items: center;
     gap: 0.5rem;
     margin-top: 0.2rem;
+    flex-wrap: wrap;
 }
 
 .logo .title-line {
@@ -327,103 +336,6 @@ header {
     }
     to {
         transform: rotate(360deg);
-    }
-}
-
-/* ===== Mobile Responsive Adjustments ===== */
-@media (max-width: 992px) {
-    .logo .name {
-        font-size: 1.2rem;
-        letter-spacing: 0.6px;
-    }
-    
-    .logo .title {
-        font-size: 0.75rem;
-        letter-spacing: 1.2px;
-    }
-    
-    .logo .qs-container {
-        width: 45px;
-        height: 45px;
-    }
-    
-    .logo .qs-badge {
-        font-size: 1.4rem;
-    }
-}
-
-@media (max-width: 768px) {
-    .logo .name {
-        font-size: 1.1rem;
-    }
-    
-    .logo .title {
-        font-size: 0.7rem;
-        letter-spacing: 1px;
-    }
-    
-    .logo .title-container {
-        gap: 0.3rem;
-    }
-    
-    .logo .qs-container {
-        width: 40px;
-        height: 40px;
-    }
-    
-    .logo .qs-badge {
-        font-size: 1.2rem;
-        border-radius: 8px;
-    }
-    
-    .logo .construction-ring {
-        top: -4px;
-        left: -4px;
-        right: -4px;
-        bottom: -4px;
-        border-width: 1.5px;
-    }
-    
-    .logo .ruler-element {
-        width: 20px;
-        height: 3px;
-        right: -6px;
-    }
-    
-    .logo .hammer-element {
-        width: 16px;
-        height: 3px;
-        bottom: -6px;
-    }
-}
-
-@media (max-width: 576px) {
-    .logo .logo-text {
-        display: none;
-    }
-    
-    .logo .qs-container {
-        width: 45px;
-        height: 45px;
-    }
-    
-    .logo .qs-badge {
-        font-size: 1.3rem;
-    }
-    
-    .logo {
-        gap: 0;
-    }
-}
-
-@media (max-width: 380px) {
-    .logo .qs-container {
-        width: 40px;
-        height: 40px;
-    }
-    
-    .logo .qs-badge {
-        font-size: 1.2rem;
     }
 }
 
@@ -472,6 +384,8 @@ header {
     color: var(--text-light);
     font-size: 1.5rem;
     cursor: pointer;
+    flex-shrink: 0;
+    z-index: 1001;
 }
 
 /* ===== Hero Section ===== */
@@ -493,14 +407,12 @@ header {
     align-items: center;
     flex-wrap: wrap;
     gap: 2rem;
-    padding-right: -40px; /* Added right padding */
 }
 
 .hero-content {
     flex: 1;
     min-width: 300px;
     max-width: 600px;
-    padding-right: 20px; /* Added right padding */
 }
 
 .hero h1 {
@@ -624,9 +536,9 @@ header {
 
 /* ===== 3D Animation Container - UPDATED ===== */
 #tool-container {
-    flex: 0 0 500px; /* Increased from 380px */
-    width: 100px; /* Increased from 380px */
-    height: 600px; /* Increased from 380px */
+    flex: 0 0 500px;
+    width: 500px;
+    height: 600px;
     border-radius: 12px;
     overflow: hidden;
     box-shadow: 0 25px 60px rgba(0, 0, 0, 0.7);
@@ -636,7 +548,6 @@ header {
     margin-right: -100px;
     margin-bottom: 40px;
 }
-
 
 #tool-container canvas {
     width: 100% !important;
@@ -901,7 +812,6 @@ header {
     display: flex;
     align-items: flex-start;
     gap: 1.2rem;
-    
 }
 
 .contact-icon {
@@ -1021,20 +931,18 @@ footer {
     .hero .container {
         flex-direction: column;
         text-align: center;
-        padding-right: 1.5rem; /* Reset padding for mobile */
     }
     
     .hero-content {
         max-width: 800px;
-        padding-right: 0; /* Reset padding for mobile */
     }
     
     #tool-container {
-        margin-right: 0; /* Reset margin for mobile */
+        margin-right: 0;
         margin-top: 2rem;
-        width: 350px;
-        height: 350px;
-        flex: 0 0 350px;
+        width: 500px;
+        height: 500px;
+        flex: 0 0 500px;
     }
 }
 
@@ -1062,9 +970,28 @@ footer {
     }
     
     #tool-container {
-        width: 320px;
-        height: 320px;
-        flex: 0 0 320px;
+        width: 450px;
+        height: 450px;
+        flex: 0 0 450px;
+    }
+    
+    /* Mobile navigation fixes */
+    .nav-container {
+        padding: 1rem;
+        justify-content: space-between;
+        position: relative;
+    }
+    
+    .logo {
+        position: static;
+        transform: none;
+        flex: 0 0 auto;
+    }
+    
+    .mobile-menu-btn {
+        position: static;
+        transform: none;
+        margin-left: auto;
     }
 }
 
@@ -1085,6 +1012,7 @@ footer {
         clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
         transition: clip-path 0.4s ease;
         box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        z-index: 1000;
     }
 
     .nav-links.active {
@@ -1093,20 +1021,53 @@ footer {
 
     .nav-links li {
         margin: 1rem 0;
+        width: 100%;
+        text-align: center;
+    }
+    
+    .nav-links a {
+        display: block;
+        padding: 0.8rem 1rem;
+        width: 100%;
     }
 
     .mobile-menu-btn {
         display: block;
+        margin-left: 15px;
     }
 
     #tool-container {
-        width: 300px;
-        height: 300px;
-        flex: 0 0 300px;
+        width: 400px;
+        height: 400px;
+        flex: 0 0 400px;
     }
     
     .cta-buttons {
         justify-content: center;
+    }
+    
+    /* Mobile logo adjustments */
+    .logo .qs-container {
+        width: 45px;
+        height: 45px;
+    }
+    
+    .logo .qs-badge {
+        font-size: 1.4rem;
+    }
+    
+    .logo .name {
+        font-size: 1.1rem;
+    }
+    
+    .logo .title {
+        font-size: 0.7rem;
+        letter-spacing: 1px;
+    }
+    
+    .logo .logo-text {
+        min-width: 0;
+        max-width: 150px;
     }
 }
 
@@ -1140,38 +1101,93 @@ footer {
     }
     
     #tool-container {
-        width: 280px;
-        height: 280px;
-        flex: 0 0 280px;
+        width: 320px;
+        height: 320px;
+        flex: 0 0 320px;
+    }
+    
+    /* Small screen logo adjustments */
+    .logo .name {
+        font-size: 1rem;
+    }
+    
+    .logo .title {
+        font-size: 0.65rem;
+    }
+    
+    .logo .qs-container {
+        width: 40px;
+        height: 40px;
+    }
+    
+    .logo .qs-badge {
+        font-size: 1.2rem;
+    }
+    
+    .logo .logo-text {
+        max-width: 130px;
     }
 }
 
 @media (max-width: 480px) {
     #tool-container {
-        width: 260px;
-        height: 260px;
-        flex: 0 0 260px;
+        width: 300px;
+        height: 300px;
+        flex: 0 0 300px;
     }
     
     .container {
-        padding: 0 6rem;
-        padding-top: 50px;
+        padding: 0 1rem;
     }
     
     .hero-content {
-        padding: 0 1rem;
+        padding: 0 0.5rem;
     }
     
     .contact-form {
         padding: 1.5rem;
     }
+    
+    /* Extra small screen logo adjustments */
+    .logo .title {
+        display: none;
+    }
+    
+    .logo .title-line {
+        display: none;
+    }
+    
+    .logo .name {
+        font-size: 0.9rem;
+    }
+    
+    .logo .logo-text {
+        max-width: 100px;
+    }
+    
+    .nav-container {
+        padding: 0.8rem 1rem;
+    }
 }
 
 @media (max-width: 380px) {
     #tool-container {
-        width: 240px;
-        height: 240px;
-        flex: 0 0 240px;
+        width: 280px;
+        height: 280px;
+        flex: 0 0 280px;
+    }
+    
+    .logo .logo-text {
+        display: none;
+    }
+    
+    .logo {
+        gap: 0;
+    }
+    
+    .logo .qs-container {
+        width: 45px;
+        height: 45px;
     }
 }
 
@@ -1199,9 +1215,9 @@ footer {
 }
 
 .commercial-summary {
-    display: grid;
+    display: flex;
     flex-wrap: wrap;
-    gap: 0.2rem;
+    gap: 1rem;
     margin-top: 1rem;
     font-size: 0.95rem;
     color: var(--secondary-blue);
@@ -1442,5 +1458,3 @@ footer {
     color: transparent;
     user-select: none;
 }
-
-
