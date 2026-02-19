@@ -12,8 +12,8 @@ document.addEventListener('DOMContentLoaded', function() {
     setupSmoothScrolling();
     initBurjKhalifaAnimation();
     setupAnimations();
-    initLogoEffects(); // Add this line
-    initSkillMeters();
+    initLogoEffects();
+    // Skill meters disabled - function exists but does nothing
 });
 
 // Mobile Navigation Toggle
@@ -81,6 +81,7 @@ function setupFormValidation() {
         }, 1500);
     });
 }
+
 // Add interactive effects to logo
 function initLogoEffects() {
     const logo = document.querySelector('.logo');
@@ -797,43 +798,8 @@ function initBurjKhalifaAnimation() {
     animate();
 }
 
-
-
-// Skill meters (animate small bars on scroll)
+// Skill meters - DISABLED (empty function)
 function initSkillMeters() {
-    const meters = document.querySelectorAll('.skill-meter');
-    if (!meters.length) return;
-
-    const animateMeter = (meter) => {
-        const percent = parseInt(meter.getAttribute('data-percent') || '0', 10);
-        const fill = meter.querySelector('.skill-meter-fill');
-        const label = meter.querySelector('.skill-meter-label');
-
-        // REMOVED: label.textContent = `${percent}%`; (no percentage text)
-        
-        if (fill) {
-            // Trigger transition
-            requestAnimationFrame(() => {
-                fill.style.width = `${Math.max(0, Math.min(100, percent))}%`;
-            });
-        }
-        meter.classList.add('is-visible');
-    };
-
-    // Use IntersectionObserver for subtle on-scroll animation
-    if ('IntersectionObserver' in window) {
-        const observer = new IntersectionObserver((entries, obs) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    animateMeter(entry.target);
-                    obs.unobserve(entry.target);
-                }
-            });
-        }, { threshold: 0.35 });
-
-        meters.forEach(m => observer.observe(m));
-    } else {
-        // Fallback: animate immediately
-        meters.forEach(animateMeter);
-    }
+    // Function intentionally left empty - skill meters removed
+    return;
 }
