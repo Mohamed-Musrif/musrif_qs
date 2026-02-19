@@ -809,7 +809,8 @@ function initSkillMeters() {
         const fill = meter.querySelector('.skill-meter-fill');
         const label = meter.querySelector('.skill-meter-label');
 
-        if (label) label.textContent = `${percent}%`;
+        // REMOVED: label.textContent = `${percent}%`; (no percentage text)
+        
         if (fill) {
             // Trigger transition
             requestAnimationFrame(() => {
